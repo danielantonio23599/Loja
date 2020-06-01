@@ -10,19 +10,45 @@ package modelo;
  * @author Daniel
  */
 public class VendaBEAN {
+
     private int codigo;
     private byte[] QRcode;
-    private String checkIn;
-    private String checkOut;
+    private String hora;
     private float valor;
+    private float valorFin;
     private float custo;
     private float desconto;
+    private float frete;
     private String pagamento;
     private int caixa;
-    private int mesa;
     private String status;
-     private int entrega;
+    private int entrega;
     private int cliente;
+
+    public float getValorFin() {
+        return valorFin;
+    }
+
+    public void setValorFin(float valorFin) {
+        this.valorFin = valorFin;
+    }
+    
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+
+    public float getFrete() {
+        return frete;
+    }
+
+    public void setFrete(float frete) {
+        this.frete = frete;
+    }
 
     public int getEntrega() {
         return entrega;
@@ -49,7 +75,15 @@ public class VendaBEAN {
         this.desconto = desconto;
     }
 
-    
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+
     public int getCodigo() {
         return codigo;
     }
@@ -66,39 +100,6 @@ public class VendaBEAN {
         this.QRcode = QRcode;
     }
 
-    public String getCheckIn() {
-        return checkIn;
-    }
-
-    public void setCheckIn(String checkIn) {
-        this.checkIn = checkIn;
-    }
-
-    public String getCheckOut() {
-        return checkOut;
-    }
-
-    public void setCheckOut(String checkOut) {
-        this.checkOut = checkOut;
-    }
-
-    public int getMesa() {
-        return mesa;
-    }
-
-    public void setMesa(int mesa) {
-        this.mesa = mesa;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-   
 
     public float getValor() {
         return valor;

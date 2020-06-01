@@ -274,7 +274,7 @@ private DefaultTableModel criaTabelaProdutosExcluidos() {
             }
         });
         SharedPreferencesEmpresaBEAN sh = SharedPEmpresa_Control.listar();
-        LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
         final Call<ArrayList<ExcluzaoBEAN>> call = api.listarExcluzaoCaixa(sh.getEmpEmail(), sh.getEmpSenha());
         call.enqueue(new Callback<ArrayList<ExcluzaoBEAN>>() {
             @Override

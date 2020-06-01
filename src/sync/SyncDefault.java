@@ -12,7 +12,7 @@ public class SyncDefault {
 
     private static String ip = "localhost";
     private String url;
-    public static final Retrofit RETROFIT_RESTAURANTE = new Retrofit.Builder().
+    public static final Retrofit RETROFIT_LOJA = new Retrofit.Builder().
             baseUrl(getUrl()).
             addConverterFactory(GsonConverterFactory.create()).
             build();
@@ -21,7 +21,7 @@ public class SyncDefault {
        ip = ser.getIp();
         if (!ip.equals("")) {
             System.out.println(ip);
-            return "http://" + ip + ":8089/lojaServer/";
+            return "http://" + ip + ":8089/LojaServer/";
         } else {
             System.out.println("localhost");
             return "http://localhost:8089/LojaServer/";

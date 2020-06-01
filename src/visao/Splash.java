@@ -61,7 +61,7 @@ public final class Splash extends javax.swing.JFrame {
         CaixaBEAN c = null;
         String data = Time.getData();
         SharedPreferencesEmpresaBEAN sh = SharedPEmpresa_Control.listar();
-        LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
         final Call<CaixaBEAN> call = api.listarCaixa(sh.getEmpEmail(), sh.getEmpSenha());
         call.enqueue(new Callback<CaixaBEAN>() {
             @Override

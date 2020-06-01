@@ -524,7 +524,7 @@ public class FRMPreEmpresa extends javax.swing.JFrame {
 
                     }
                 });
-                LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+                LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
                 String json = new Gson().toJson(f);
                 System.out.println(json);
                 EmpresaBEAN c = new GsonBuilder().setDateFormat("yyyy-MM-dd").create().fromJson(json, EmpresaBEAN.class);

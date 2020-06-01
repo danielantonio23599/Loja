@@ -575,7 +575,7 @@ public class FRMEmpresa extends javax.swing.JFrame {
                     }
                 });
                 SharedPreferencesEmpresaBEAN sh = SharedPEmpresa_Control.listar();
-                LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+                LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
                 final Call<Void> call = api.atualizaEmpresa(new Gson().toJson(f), sh.getEmpEmail(), sh.getEmpSenha());
                 call.enqueue(new Callback<Void>() {
                     @Override
@@ -888,7 +888,7 @@ public class FRMEmpresa extends javax.swing.JFrame {
             }
         });
         SharedPreferencesEmpresaBEAN sh = SharedPEmpresa_Control.listar();
-        LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
         final Call<EmpresaBEAN> call = api.listarEmpresa(sh.getEmpEmail(), sh.getEmpSenha());
         call.enqueue(new Callback<EmpresaBEAN>() {
             @Override

@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import javax.swing.JDialog;
 import modelo.CaixaBEAN;
 import visao.FRMCaixa;
 
@@ -16,7 +17,7 @@ import visao.FRMCaixa;
  *
  * @author Daniel
  */
-public class AlertAbrirCaixa extends javax.swing.JFrame {
+public class AlertAbrirCaixa extends JDialog {
 
     private float valor;
     private FRMCaixa c;

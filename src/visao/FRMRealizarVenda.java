@@ -37,7 +37,17 @@ public class FRMRealizarVenda extends javax.swing.JFrame {
 
     DefaultListModel modelo = new DefaultListModel();
     private Produtos produto;
+    private FRMCaixa c;
+    private FRMVenda v;
     private ArrayList<Produtos> produtos = new ArrayList<Produtos>();
+
+    public void setC(FRMCaixa c) {
+        this.c = c;
+    }
+
+    public void setV(FRMVenda v) {
+        this.v = v;
+    }
 
     /**
      * Creates new form FRMRealizarVenda
@@ -90,7 +100,7 @@ public class FRMRealizarVenda extends javax.swing.JFrame {
             }
         });
         SharedPreferencesEmpresaBEAN sh = SharedPEmpresa_Control.listar();
-        LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
         final Call<ArrayList<Produtos>> call = api.buscarProdutos(sh.getEmpEmail(), sh.getEmpSenha(), cadenaEscrita);
         call.enqueue(new Callback<ArrayList<Produtos>>() {
             @Override
@@ -157,10 +167,10 @@ public class FRMRealizarVenda extends javax.swing.JFrame {
             comboProduto.showPopup();
             if (pp.size() == 1) {
                 System.out.println("buscar");
-                
+
                 setProdutos(pp.get(comboProduto.getSelectedIndex()));
                 setDados(labVenda.getText() + "");
-               
+
             }
             //setProdutos(pp.get(comboProduto.getSelectedIndex()));
         } else {
@@ -542,7 +552,7 @@ public class FRMRealizarVenda extends javax.swing.JFrame {
             }
         });
         SharedPreferencesEmpresaBEAN sh = SharedPEmpresa_Control.listar();
-        LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
         final Call<Void> call = api.inserirPedidoMesa(new Gson().toJson(venda), sh.getEmpEmail(), sh.getEmpSenha());
         call.enqueue(new Callback<Void>() {
             @Override
@@ -552,8 +562,23 @@ public class FRMRealizarVenda extends javax.swing.JFrame {
                     String auth = response.headers().get("auth");
                     if (auth.equals("1")) {
                         System.out.println("Login correto");
+                        String sucesso = response.headers().get("sucesso");
+                        String msg;
+                        if (sucesso.equals("-1")) {
+                            msg = "Produto com Saldo 0";
+                        } else {
+                            msg = "Sucesso";
+                        }
                         SwingUtilities.invokeLater(new Runnable() {
                             public void run() {
+                                if (c != null) {
+                                    c.atualizar();
+                                } else {
+                                    System.out.println("atualizar");
+                                    v.atualizar();
+                                }
+                                JOptionPane.showMessageDialog(null, msg);
+
                                 dispose();
                             }
                         });

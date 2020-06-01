@@ -58,7 +58,7 @@ public class FRMAdmicao extends javax.swing.JFrame {
             }
         });
         SharedPreferencesEmpresaBEAN sh = SharedPEmpresa_Control.listar();
-        LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
         System.out.println(jtfCodigo.getText());
         final Call<AdmicaoBEAN> call = api.localisarAdmicao(sh.getEmpEmail(), sh.getEmpSenha(), jtfCodigo.getText());
         call.enqueue(new Callback<AdmicaoBEAN>() {
@@ -447,7 +447,7 @@ public class FRMAdmicao extends javax.swing.JFrame {
             }
         });
         SharedPreferencesBEAN sh = SharedP_Control.listar();
-        LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
         final Call<Void> call = api.gerarNumFunPonto(sh.getFunEmail(), sh.getFunSenha());
         call.enqueue(new Callback<Void>() {
             @Override
@@ -511,7 +511,7 @@ public class FRMAdmicao extends javax.swing.JFrame {
                 }
             });
             SharedPreferencesBEAN sh = SharedP_Control.listar();
-            LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+            LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
             System.out.println(new Gson().toJson(adm));
             final Call<Void> call = api.insereAdmicao(sh.getFunEmail(), sh.getFunSenha(), new Gson().toJson(adm));
             call.enqueue(new Callback<Void>() {
@@ -588,7 +588,7 @@ public class FRMAdmicao extends javax.swing.JFrame {
                     }
                 });
                 SharedPreferencesBEAN sh = SharedP_Control.listar();
-                LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+                LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
                 System.out.println(new Gson().toJson(adm));
                 final Call<Void> call = api.insereDemicao(sh.getFunEmail(), sh.getFunSenha(), new Gson().toJson(adm));
                 call.enqueue(new Callback<Void>() {
@@ -669,7 +669,7 @@ public class FRMAdmicao extends javax.swing.JFrame {
             }
         });
         SharedPreferencesBEAN sh = SharedP_Control.listar();
-        LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
         System.out.println(new Gson().toJson(adm));
         final Call<Void> call = api.excluirAdmicao(sh.getFunEmail(), sh.getFunSenha(), new Gson().toJson(adm));
         call.enqueue(new Callback<Void>() {
@@ -874,7 +874,7 @@ public class FRMAdmicao extends javax.swing.JFrame {
             }
         });
         SharedPreferencesBEAN sh = SharedP_Control.listar();
-        LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class
         );
         System.out.println(sh.getFunEmail() + "/" + sh.getFunSenha());
         final Call<ArrayList<CargoBEAN>> call = api.listarCargos(sh.getFunEmail(), sh.getFunSenha());

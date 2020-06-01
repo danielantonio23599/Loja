@@ -336,7 +336,7 @@ public class FRMLoginEmpresa extends javax.swing.JFrame {
                 a.setVisible(true);
             }
         });
-        LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
         final Call<SharedPreferencesEmpresaBEAN> call = api.fazLoginEmpresa(nomeUsuario, Criptografia.criptografar(senha));
         SharedPreferencesEmpresaBEAN u = null;
         call.enqueue(new Callback<SharedPreferencesEmpresaBEAN>() {

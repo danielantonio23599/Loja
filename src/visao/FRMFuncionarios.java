@@ -57,7 +57,7 @@ public class FRMFuncionarios extends javax.swing.JFrame {
 
         SharedPreferencesEmpresaBEAN sd = SharedPEmpresa_Control.listar();
 
-        LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
 
         final Call<ArrayList<FuncionarioBEAN>> call = api.listarFuncionarios(sd.getEmpEmail(), sd.getEmpSenha());
         call.enqueue(new Callback<ArrayList<FuncionarioBEAN>>() {

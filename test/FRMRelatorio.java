@@ -86,7 +86,7 @@ public class FRMRelatorio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
         SharedPreferencesEmpresaBEAN sh = SharedPEmpresa_Control.listar();
         Carregamento a = new Carregamento(this, true);
         SwingUtilities.invokeLater(new Runnable() {

@@ -552,7 +552,7 @@ public class FRMCargo extends javax.swing.JFrame {
             }
         });
         SharedPreferencesBEAN sh = SharedP_Control.listar();
-        LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
         final Call<Void> call = api.insereCargo(new Gson().toJson(car), sh.getFunEmail(), sh.getFunSenha());
 
         call.enqueue(new Callback<Void>() {
@@ -603,7 +603,7 @@ public class FRMCargo extends javax.swing.JFrame {
             }
         });
         SharedPreferencesBEAN sh = SharedP_Control.listar();
-        LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
         final Call<Void> call = api.atualizaCargo(cargo, sh.getFunEmail(), sh.getFunSenha());
 
         call.enqueue(new Callback<Void>() {
@@ -652,7 +652,7 @@ public class FRMCargo extends javax.swing.JFrame {
             }
         });
         SharedPreferencesBEAN sh = SharedP_Control.listar();
-        LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
         final Call<Void> call = api.excluiCargo(car, sh.getFunEmail(), sh.getFunSenha());
 
         call.enqueue(new Callback<Void>() {
@@ -702,7 +702,7 @@ public class FRMCargo extends javax.swing.JFrame {
             }
         });
         SharedPreferencesBEAN sh = SharedP_Control.listar();
-        LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
         System.out.println(sh.getFunEmail() + "/" + sh.getFunSenha());
         final Call<ArrayList<CargoBEAN>> call = api.listarCargos(sh.getFunEmail(), sh.getFunSenha());
         call.enqueue(new Callback<ArrayList<CargoBEAN>>() {

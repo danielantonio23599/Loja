@@ -10,13 +10,14 @@ package modelo;
  * @author Daniel
  */
 public class ProdutosGravados {
-    private int codProduto;
+   private int codProduto;
     private int codPedidVenda;
     private String nome;
+    private Float valorUNI;
     private Float quantidade;
     private String time;
     private int mesa;
-    private Float valor;
+    private Float valorFinal;
 
     public int getCodProduto() {
         return codProduto;
@@ -68,13 +69,22 @@ public class ProdutosGravados {
         this.mesa = mesa;
     }
 
-    public Float getValor() {
-        return valor;
+    public Float getValorUNI() {
+        return valorUNI;
     }
 
-    public void setValor(Float valor) {
-        this.valor = valor;
+    public void setValorUNI(Float valorUNI) {
+        this.valorUNI = valorUNI;
     }
+
+    public Float getValorFinal() {
+        return valorFinal;
+    }
+
+    public void setValorFinal(Float valorFinal) {
+        this.valorFinal = valorFinal;
+    }
+
     
     
 }

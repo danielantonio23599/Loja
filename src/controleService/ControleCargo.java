@@ -24,7 +24,7 @@ public class ControleCargo {
 
     public CargoBEAN cargo_do_funcionario() {
 
-        LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
         SharedPreferencesBEAN sh = SharedP_Control.listar();
         final Call<CargoBEAN> call = api.listarCargoFuncionario(sh.getFunEmail(), sh.getFunSenha(), sh.getFunCodigo()+"");
 

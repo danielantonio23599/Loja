@@ -16,6 +16,7 @@ import modelo.ProdutoBEAN;
 import modelo.Produtos;
 import modelo.ProdutosGravados;
 import modelo.SangriaBEAN;
+import modelo.Venda;
 import modelo.VendaBEAN;
 import modelo.local.SharedPreferencesBEAN;
 import modelo.local.SharedPreferencesEmpresaBEAN;
@@ -154,8 +155,8 @@ public interface LojaAPI {
     Call<Void> saldoAtualCaixa(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha);
 
     @FormUrlEncoded
-    @POST("restaurante_server/TotalMesa")
-    Call<Void> getValorMesa(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha, @Field("mesa") String mesa);
+    @POST("loja_server/TotalVenda")
+    Call<Void> getValorMesa(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha, @Field("venda") String mesa);
 
     @FormUrlEncoded
     @POST("restaurante_server/TotalVendidoCaixa")
@@ -174,20 +175,36 @@ public interface LojaAPI {
     Call<ArrayList<ProdutosGravados>> listarProdutosVendidos(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha);
 
     @FormUrlEncoded
-    @POST("restaurante_server/ListarProdutosMesa")
-    Call<ArrayList<ProdutosGravados>> listarProdutosMesa(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha, @Field("mesa") String mesa);
+    @POST("loja_server/ListarProdutosVenda")
+    Call<ArrayList<ProdutosGravados>> listarProdutosVenda(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha, @Field("venda") String mesa);
 
     @FormUrlEncoded
-    @POST("restaurante_server/GerarMesaBalcao")
-    Call<Void> gerarMesaBalcao(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha);
+    @POST("loja_server/AbrirVenda")
+    Call<Void> abrirVenda(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha);
 
     @FormUrlEncoded
     @POST("restaurante_server/IncluirDespesaDia")
     Call<Void> incluirDespesasDia(@Field("despesa") String despesas, @Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha);
 
     @FormUrlEncoded
-    @POST("restaurante_server/ListarMesasAbertas")
-    Call<ArrayList<Mesa>> getMesasAbertas(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha);
+    @POST("loja_server/ListarVendasAbertas")
+    Call<ArrayList<Venda>> getVendasAbertas(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha);
+
+    @FormUrlEncoded
+    @POST("loja_server/ListarVendas")
+    Call<ArrayList<Venda>> getVendas(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha);
+
+    @FormUrlEncoded
+    @POST("loja_server/ListarVendasStatus")
+    Call<ArrayList<Venda>> getVendasPorStatus(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha, @Field("status") String status);
+
+    @FormUrlEncoded
+    @POST("loja_server/ListarVendasConsulta")
+    Call<ArrayList<Venda>> getVendasPorConsulta(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha, @Field("consulta") String consulta);
+
+    @FormUrlEncoded
+    @POST("loja_server/ListarVendasData")
+    Call<ArrayList<Venda>> getVendasPorData(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha, @Field("dataIn") String dataIn, @Field("dataFin") String dataFin);
 
     @FormUrlEncoded
     @POST("restaurante_server/IsMesasAbertas")
@@ -226,7 +243,7 @@ public interface LojaAPI {
     Call<Void> cancelarPedido(@Field("pedido") String pedido, @Field("motivo") String motivo, @Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha);
 
     @FormUrlEncoded
-    @POST("restaurante_server/AdicionarEmpresa")
+    @POST("loja_server/AdicionarEmpresa")
     Call<Void> insereEmpresa(@Field("empresa") String empresa);
 
     @FormUrlEncoded

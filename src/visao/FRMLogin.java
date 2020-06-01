@@ -412,7 +412,7 @@ public class FRMLogin extends javax.swing.JFrame {
             }
         });
         SharedPreferencesEmpresaBEAN sh = SharedPEmpresa_Control.listar();
-        LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
         System.out.println(sh.getEmpEmail() + "/" + sh.getEmpSenha());
         final Call<ArrayList<CargoBEAN>> call = api.listarCargos(sh.getEmpEmail(), sh.getEmpSenha());
         call.enqueue(new Callback<ArrayList<CargoBEAN>>() {
@@ -506,7 +506,7 @@ public class FRMLogin extends javax.swing.JFrame {
                 a.setVisible(true);
             }
         });
-        LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
         SharedPreferencesEmpresaBEAN sh = SharedPEmpresa_Control.listar();
         final Call<SharedPreferencesBEAN> call = api.fazLogin(nomeUsuario, senha, sh.getEmpCodigo() + "");
         SharedPreferencesBEAN u = null;

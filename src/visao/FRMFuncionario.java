@@ -82,7 +82,7 @@ public class FRMFuncionario extends javax.swing.JFrame {
             }
         });
         SharedPreferencesBEAN sh = SharedP_Control.listar();
-        LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
         System.out.println(sh.getFunEmail() + "/" + sh.getFunSenha());
         final Call<ArrayList<CargoBEAN>> call = api.listarCargos(sh.getFunEmail(), sh.getFunSenha());
         call.enqueue(new Callback<ArrayList<CargoBEAN>>() {
@@ -831,7 +831,7 @@ public class FRMFuncionario extends javax.swing.JFrame {
             }
         });
         SharedPreferencesEmpresaBEAN sh = SharedPEmpresa_Control.listar();
-        LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
         System.out.println("email = " + sh.getEmpEmail() + " , senha = " + sh.getEmpSenha());
         final Call<Void> call = api.insereFuncionario(new Gson().toJson(f), sh.getEmpEmail(), sh.getEmpSenha());
         call.enqueue(new Callback<Void>() {
@@ -895,7 +895,7 @@ public class FRMFuncionario extends javax.swing.JFrame {
             }
         });
         SharedPreferencesBEAN sh = SharedP_Control.listar();
-        LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
         final Call<FuncionarioBEAN> call = api.listarFuncionario(sh.getFunEmail(), sh.getFunSenha(), codigo + "");
         call.enqueue(new Callback<FuncionarioBEAN>() {
             @Override

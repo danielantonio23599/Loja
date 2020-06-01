@@ -94,11 +94,6 @@ public class FRMProduto extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jtfGarantia = new javax.swing.JTextField();
         jtfDescricao = new javax.swing.JTextField();
-        jPanel6 = new javax.swing.JPanel();
-        labNome = new javax.swing.JLabel();
-        labPreco = new javax.swing.JLabel();
-        labDes = new javax.swing.JLabel();
-        labFoto = new javax.swing.JLabel();
         jPanel20 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         lbFotoPedido = new javax.swing.JLabel();
@@ -110,6 +105,7 @@ public class FRMProduto extends javax.swing.JFrame {
         jtfCusto = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jtfQuantidade = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
         jPanel21 = new javax.swing.JPanel();
         jScrollPane25 = new javax.swing.JScrollPane();
         tabelaPedido = new javax.swing.JTable();
@@ -268,11 +264,11 @@ public class FRMProduto extends javax.swing.JFrame {
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel43)
                             .addComponent(jLabel44)
-                            .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 44, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jtfDescricao)
-                    .addComponent(jtfGarantia))
+                    .addComponent(jtfGarantia)
+                    .addComponent(comboTipo, 0, 472, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
@@ -292,30 +288,6 @@ public class FRMProduto extends javax.swing.JFrame {
                 .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(174, Short.MAX_VALUE))
         );
-
-        jPanel6.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel6.setLayout(null);
-
-        labNome.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        labNome.setText("Nome");
-        jPanel6.add(labNome);
-        labNome.setBounds(120, 30, 470, 22);
-
-        labPreco.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        labPreco.setForeground(new java.awt.Color(204, 0, 0));
-        labPreco.setText("Preço");
-        jPanel6.add(labPreco);
-        labPreco.setBounds(480, 350, 120, 30);
-
-        labDes.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        labDes.setText("Descrição\n");
-        jPanel6.add(labDes);
-        labDes.setBounds(100, 320, 360, 30);
-
-        labFoto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labFoto.setBorder(new javax.swing.border.MatteBorder(null));
-        jPanel6.add(labFoto);
-        labFoto.setBounds(90, 20, 515, 370);
 
         jPanel20.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel20.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -353,7 +325,7 @@ public class FRMProduto extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lbFotoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbFotoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -451,26 +423,23 @@ public class FRMProduto extends javax.swing.JFrame {
             .addGroup(jPanel20Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
                 .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtfNome)
                     .addGroup(jPanel20Layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2)))
-                    .addGroup(jPanel20Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel5)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel20Layout.createSequentialGroup()
-                        .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jtfQuantidade, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtfPreco, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(jtfCusto, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jtfNome))
+                        .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addGroup(jPanel20Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(186, 186, 186)
+                                .addComponent(jLabel4))
+                            .addGroup(jPanel20Layout.createSequentialGroup()
+                                .addComponent(jtfPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(34, 34, 34)
+                                .addComponent(jtfCusto, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel5)
+                            .addComponent(jtfQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel20Layout.setVerticalGroup(
@@ -479,25 +448,27 @@ public class FRMProduto extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel20Layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel20Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
+                        .addComponent(jLabel2)
+                        .addGap(11, 11, 11)
+                        .addComponent(jtfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jtfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(36, 36, 36)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jtfPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
                             .addComponent(jtfCusto, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jtfQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addGap(30, 30, 30))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel5)
+                        .addGap(5, 5, 5)
+                        .addComponent(jtfQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/logo2.jpg"))); // NOI18N
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -505,12 +476,12 @@ public class FRMProduto extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -519,9 +490,9 @@ public class FRMProduto extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(8, 8, 8))
         );
 
@@ -556,7 +527,7 @@ public class FRMProduto extends javax.swing.JFrame {
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel21Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane25, javax.swing.GroupLayout.DEFAULT_SIZE, 1045, Short.MAX_VALUE)
+                .addComponent(jScrollPane25, javax.swing.GroupLayout.DEFAULT_SIZE, 1018, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel21Layout.setVerticalGroup(
@@ -619,7 +590,7 @@ public class FRMProduto extends javax.swing.JFrame {
                 }
             });
             SharedPreferencesEmpresaBEAN sh = SharedPEmpresa_Control.listar();
-            LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+            LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
             final Call<Void> call = api.insereProduto(new Gson().toJson(f), sh.getEmpEmail(), sh.getEmpSenha());
             call.enqueue(new Callback<Void>() {
                 @Override
@@ -691,7 +662,7 @@ public class FRMProduto extends javax.swing.JFrame {
                 }
             });
             SharedPreferencesBEAN sh = SharedP_Control.listar();
-            LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+            LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
             final Call<Void> call = api.atualizaProduto(new Gson().toJson(f), sh.getFunEmail(), sh.getFunSenha());
             call.enqueue(new Callback<Void>() {
                 @Override
@@ -758,7 +729,7 @@ public class FRMProduto extends javax.swing.JFrame {
                 }
             });
             SharedPreferencesBEAN sh = SharedP_Control.listar();
-            LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+            LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
             final Call<Void> call = api.excluiProduto(cod + "", sh.getFunEmail(), sh.getFunSenha());
             call.enqueue(new Callback<Void>() {
                 @Override
@@ -828,8 +799,6 @@ public class FRMProduto extends javax.swing.JFrame {
                 imagem2 = m.setDimensaoImagem(arquivo.getAbsolutePath(), 380, 515);
 
                 lbFotoPedido.setIcon(new ImageIcon(imagem));
-
-                labFoto.setIcon(new ImageIcon(imagem2));
                 lbFotoPedido.setText("");
 
             } catch (Exception ex) {
@@ -857,7 +826,7 @@ public class FRMProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_jtfNomeKeyPressed
 
     private void jtfNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfNomeKeyReleased
-        labNome.setText(jtfNome.getText());
+       
     }//GEN-LAST:event_jtfNomeKeyReleased
 
     private void jtfPrecoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfPrecoKeyTyped
@@ -868,7 +837,7 @@ public class FRMProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_jtfPrecoKeyTyped
 
     private void jtfPrecoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfPrecoKeyReleased
-        labPreco.setText("R$ " + jtfPreco.getText());
+
     }//GEN-LAST:event_jtfPrecoKeyReleased
 
     private void jtfCustoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfCustoKeyTyped
@@ -1020,6 +989,7 @@ public class FRMProduto extends javax.swing.JFrame {
     private javax.swing.JButton btnLocalizar;
     private javax.swing.JButton btnLocalizar1;
     private javax.swing.JComboBox<String> comboTipo;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1034,7 +1004,6 @@ public class FRMProduto extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane25;
     private javax.swing.JTextField jtfCusto;
@@ -1043,10 +1012,6 @@ public class FRMProduto extends javax.swing.JFrame {
     private javax.swing.JTextField jtfNome;
     private javax.swing.JTextField jtfPreco;
     private javax.swing.JTextField jtfQuantidade;
-    private javax.swing.JLabel labDes;
-    private javax.swing.JLabel labFoto;
-    private javax.swing.JLabel labNome;
-    private javax.swing.JLabel labPreco;
     private javax.swing.JLabel lbFotoPedido;
     private javax.swing.JTable tabelaPedido;
     private javax.swing.JTabbedPane tpPedido;
@@ -1096,7 +1061,7 @@ public class FRMProduto extends javax.swing.JFrame {
         if (lbFotoPedido.getIcon() != null) {
             p.setFoto(ManipularImagem.getImgBytes(imagem2));
         } else if (cod != 0) {
-            p.setFoto(ManipularImagem.imageToByte(labFoto.getIcon()));
+            p.setFoto(ManipularImagem.imageToByte(lbFotoPedido.getIcon()));
         } else {
             p.setFoto(null);
         }
@@ -1144,10 +1109,6 @@ public class FRMProduto extends javax.swing.JFrame {
         jtfDescricao.setText("");
         comboTipo.setSelectedIndex(0);
         lbFotoPedido.setIcon(null);
-        labNome.setText("");
-        labFoto.setIcon(null);
-        labDes.setText("");
-        labPreco.setText("");
         lbFotoPedido.setText("Click para adicionar uma foto");
 
     }
@@ -1217,10 +1178,7 @@ public class FRMProduto extends javax.swing.JFrame {
         jtfDescricao.setText(c.getDescricao());      
         comboTipo.setSelectedItem(c.getTipo());
         ManipularImagem m = new ManipularImagem();
-        m.exibiImagemLabel(c.getFoto(), labFoto);      
-        labDes.setText(c.getDescricao());
-        labPreco.setText(c.getPreco() + "");
-        labNome.setText(c.getNome());
+        m.exibiImagemLabel(c.getFoto(), lbFotoPedido);      
 
     }
 
@@ -1232,7 +1190,7 @@ public class FRMProduto extends javax.swing.JFrame {
             }
         });
         SharedPreferencesEmpresaBEAN sh = SharedPEmpresa_Control.listar();
-        LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class
         );
         final Call<ArrayList<ProdutoBEAN>> call = api.listarProdutos(sh.getEmpEmail(), sh.getEmpSenha());
         call.enqueue(new Callback<ArrayList<ProdutoBEAN>>() {
@@ -1301,7 +1259,7 @@ public class FRMProduto extends javax.swing.JFrame {
             }
         });
         SharedPreferencesBEAN sh = SharedP_Control.listar();
-        LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class
         );
         final Call<ProdutoBEAN> call = api.listarProduto(sh.getFunEmail(), sh.getFunSenha(), codigo + "");
         call.enqueue(new Callback<ProdutoBEAN>() {

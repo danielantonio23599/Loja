@@ -78,7 +78,7 @@ public class FRMAdicaoProduto extends javax.swing.JFrame {
             }
         });
         SharedPreferencesEmpresaBEAN sh = SharedPEmpresa_Control.listar();
-        LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
         final Call<ArrayList<Produtos>> call = api.buscarProdutos(sh.getEmpEmail(), sh.getEmpSenha(), cadenaEscrita);
         call.enqueue(new Callback<ArrayList<Produtos>>() {
             @Override
@@ -441,7 +441,7 @@ public class FRMAdicaoProduto extends javax.swing.JFrame {
             }
         });
         SharedPreferencesEmpresaBEAN sh = SharedPEmpresa_Control.listar();
-        LojaAPI api = SyncDefault.RETROFIT_RESTAURANTE.create(LojaAPI.class);
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
         final Call<Void> call = api.auteraQuantidadeProduto(sh.getEmpEmail(), sh.getEmpSenha(), jtfQtd.getText(), lbCodigo.getText());
         call.enqueue(new Callback<Void>() {
             @Override
