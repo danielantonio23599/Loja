@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import controle.SharedPEmpresa_Control;
 
 import controle.SharedP_Control;
+import controleService.ControleLogin;
 
 import java.awt.CardLayout;
 import java.awt.GridLayout;
@@ -28,7 +29,7 @@ import javax.swing.table.TableRowSorter;
 import modelo.Caixa;
 import modelo.CaixaBEAN;
 import modelo.DespesaBEAN;
-import modelo.ExcluzaoBEAN;
+import modelo.DevolucaoBEAN;
 import modelo.Produtos;
 import modelo.ProdutosGravados;
 import modelo.SangriaBEAN;
@@ -48,6 +49,7 @@ import visao.util.AlertAbrirCaixa;
 import visao.util.AlertSangria;
 import visao.util.Carregamento;
 import sync.LojaAPI;
+import util.ManipularImagem;
 import visao.util.AlertAbrirVenda;
 import visao.util.FRMVendasAbertas;
 
@@ -69,6 +71,7 @@ public class FRMVenda extends javax.swing.JFrame {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
         mudarTela("index");
+        setDados();
         btnAtualizar.setMnemonic(KeyEvent.VK_F5);
         btnFecharVenda.setMnemonic(KeyEvent.VK_F9);
         btnImprimir.setMnemonic(KeyEvent.VK_F7);
@@ -257,7 +260,7 @@ public class FRMVenda extends javax.swing.JFrame {
         btnAtualizar = new javax.swing.JButton();
         btnImprimir = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
+        lbLogo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -266,7 +269,7 @@ public class FRMVenda extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Caixa");
 
         MenuLateral.setBackground(new java.awt.Color(0, 153, 102));
@@ -1024,22 +1027,22 @@ public class FRMVenda extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/logo2.jpg"))); // NOI18N
-        jLabel6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbLogo.setBackground(new java.awt.Color(255, 255, 255));
+        lbLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/logo2.jpg"))); // NOI18N
+        lbLogo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
+            .addComponent(lbLogo, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 11, Short.MAX_VALUE)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(lbLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout VendaBalcaoLayout = new javax.swing.GroupLayout(VendaBalcao);
@@ -1515,7 +1518,10 @@ public class FRMVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRelatorios1ActionPerformed
 
     private void btnRelatorios2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatorios2ActionPerformed
-        // TODO add your handling code here:
+       FRMListaVendas l = new FRMListaVendas();
+        l.setV(this);
+        l.setDevolucao(true);
+        l.setVisible(true);
     }//GEN-LAST:event_btnRelatorios2ActionPerformed
 
     private void btnRelatorios3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatorios3ActionPerformed
@@ -1624,7 +1630,6 @@ public class FRMVenda extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel58;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -1653,6 +1658,7 @@ public class FRMVenda extends javax.swing.JFrame {
     private javax.swing.JTextField jtfTotalFiscal;
     private javax.swing.JTextField jtfVenda;
     private javax.swing.JTextField jtfVendaF;
+    private javax.swing.JLabel lbLogo;
     private javax.swing.JLabel lbTotal;
     private javax.swing.ButtonGroup pagamento;
     private javax.swing.JRadioButton radioAprazo;
@@ -2349,6 +2355,16 @@ public class FRMVenda extends javax.swing.JFrame {
             }
         });
 
+    }
+    private void setDados() {
+        ControleLogin l = new ControleLogin();
+        SharedPreferencesEmpresaBEAN e = l.listarEmpresa();
+        if (e != null) {
+            if (e.getEmpLogo() != null) {
+                ManipularImagem m = new ManipularImagem();
+                m.exibiImagemLabel(e.getEmpLogo(), lbLogo);
+            }
+        }
     }
 
     /*--------------------------------------------------RELATORIO---------------------------------------------------------------------------------------------*/

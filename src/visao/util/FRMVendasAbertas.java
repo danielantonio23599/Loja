@@ -68,12 +68,14 @@ public class FRMVendasAbertas extends javax.swing.JFrame {
         dTable.addColumn("Cliente");
         dTable.addColumn("Status");
         dTable.addColumn("Valor");
+        dTable.addColumn("Devolucao");
+        dTable.addColumn("Final");
 
         //pega os dados do ArrayList
         //cada célula do arrayList vira uma linha(row) na tabela
         for (Venda dado : dados) {
             dTable.addRow(new Object[]{dado.getCodigo(), dado.getHora(),
-                dado.getCliente(), dado.getStatus(), dado.getValor()});
+                dado.getCliente(), dado.getStatus(), dado.getValor(), dado.getDevolucao(), (dado.getValor() - dado.getDevolucao())});
         }
         //set o modelo da tabela
         tabelaVendas.setModel(dTable);
@@ -109,7 +111,7 @@ public class FRMVendasAbertas extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        tabelaVendas.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        tabelaVendas.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         tabelaVendas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},

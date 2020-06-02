@@ -21,6 +21,7 @@ import sync.LojaAPI;
 import sync.SyncDefault;
 import util.Time;
 import visao.util.Carregamento;
+import visao.util.FRMDevolucaoProduto;
 
 /**
  *
@@ -29,9 +30,14 @@ import visao.util.Carregamento;
 public class FRMListaVendas extends javax.swing.JFrame {
 
     private FRMVenda v;
+    private boolean devolucao = false;
     ArrayList<Venda> venda = new ArrayList<>();
     private DefaultTableModel dTable;
     private TableRowSorter<TableModel> tr;
+
+    public void setDevolucao(boolean devolucao) {
+        this.devolucao = devolucao;
+    }
 
     public void setV(FRMVenda v) {
         this.v = v;
@@ -61,6 +67,8 @@ public class FRMListaVendas extends javax.swing.JFrame {
         dTable.addColumn("Cliente");
         dTable.addColumn("Status");
         dTable.addColumn("Valor");
+        dTable.addColumn("Devolucao");
+        dTable.addColumn("Valor Final");
         dTable.addColumn("Custo");
         dTable.addColumn("Pagamento");
         dTable.addColumn("Frete");
@@ -70,7 +78,7 @@ public class FRMListaVendas extends javax.swing.JFrame {
         //cada célula do arrayList vira uma linha(row) na tabela
         for (Venda dado : dados) {
             dTable.addRow(new Object[]{dado.getCodigo(), dado.getHora(),
-                dado.getCliente(), dado.getStatus(), dado.getValor(), dado.getCusto(), dado.getPagamento(), dado.getFrete(), dado.getData()});
+                dado.getCliente(), dado.getStatus(), dado.getValor(), dado.getDevolucao(), (dado.getValor() - dado.getDevolucao()), dado.getCusto(), dado.getPagamento(), dado.getFrete(), dado.getData()});
         }
         //set o modelo da tabela
         tabelaVendas.setModel(dTable);
@@ -138,7 +146,7 @@ public class FRMListaVendas extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        tabelaVendas.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        tabelaVendas.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         tabelaVendas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -171,7 +179,7 @@ public class FRMListaVendas extends javax.swing.JFrame {
             }
         });
 
-        comboStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Selecione o Status---", "Finalizada", "Aberta", "Atrazada", "Cancelada" }));
+        comboStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Selecione o Status---", "fechada", "aberta", "Atrazada", "Cancelada" }));
 
         jLabel3.setText("Status de Venda");
 
@@ -247,12 +255,13 @@ public class FRMListaVendas extends javax.swing.JFrame {
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(jtfDataFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jtfPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(btnPesquisa)
-                        .addComponent(comboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(comboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jtfDataFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtfPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(btnStatus)
                     .addComponent(btnData))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
@@ -263,7 +272,20 @@ public class FRMListaVendas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tabelaVendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaVendasMouseClicked
+        if (devolucao) {
+            int linha = tabelaVendas.getSelectedRow();
+            // System.out.println(linha);
+            if (linha >= 0) {
+                FRMDevolucaoProduto d = new FRMDevolucaoProduto();
+                int v = venda.get(linha).getCodigo();
+                d.setVenda(v);
+                System.out.println("lista " + venda.get(linha).getCodigo());
 
+                d.setVisible(true);
+                dispose();
+            }
+
+        }
     }//GEN-LAST:event_tabelaVendasMouseClicked
 
     private void btnPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisaActionPerformed

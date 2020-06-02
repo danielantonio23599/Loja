@@ -8,6 +8,7 @@ package visao;
 import com.google.gson.Gson;
 import controle.SharedPEmpresa_Control;
 import controle.SharedP_Control;
+import controleService.ControleLogin;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
@@ -57,10 +58,21 @@ public class FRMProduto extends javax.swing.JFrame {
     /**
      * Creates new form FRMPedido
      */
+    private void setDados() {
+        ControleLogin l = new ControleLogin();
+        SharedPreferencesEmpresaBEAN e = l.listarEmpresa();
+        if (e != null) {
+            if (e.getEmpLogo() != null) {
+                ManipularImagem m = new ManipularImagem();
+                m.exibiImagemLabel(e.getEmpLogo(), lbLogo);
+            }
+        }
+    }
     public FRMProduto() {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
         atualizaTabela();
+        setDados();
     }
 
     private void atualizaTabela() {
@@ -105,7 +117,7 @@ public class FRMProduto extends javax.swing.JFrame {
         jtfCusto = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jtfQuantidade = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        lbLogo = new javax.swing.JLabel();
         jPanel21 = new javax.swing.JPanel();
         jScrollPane25 = new javax.swing.JScrollPane();
         tabelaPedido = new javax.swing.JTable();
@@ -467,8 +479,8 @@ public class FRMProduto extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/logo2.jpg"))); // NOI18N
+        lbLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/logo2.jpg"))); // NOI18N
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -480,7 +492,7 @@ public class FRMProduto extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lbLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -492,7 +504,7 @@ public class FRMProduto extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lbLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(8, 8, 8))
         );
 
@@ -989,7 +1001,6 @@ public class FRMProduto extends javax.swing.JFrame {
     private javax.swing.JButton btnLocalizar;
     private javax.swing.JButton btnLocalizar1;
     private javax.swing.JComboBox<String> comboTipo;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1013,6 +1024,7 @@ public class FRMProduto extends javax.swing.JFrame {
     private javax.swing.JTextField jtfPreco;
     private javax.swing.JTextField jtfQuantidade;
     private javax.swing.JLabel lbFotoPedido;
+    private javax.swing.JLabel lbLogo;
     private javax.swing.JTable tabelaPedido;
     private javax.swing.JTabbedPane tpPedido;
     // End of variables declaration//GEN-END:variables

@@ -7,6 +7,7 @@ package visao;
 
 import com.google.gson.Gson;
 import controle.SharedP_Control;
+import controleService.ControleLogin;
 import java.awt.Image;
 import java.util.ArrayList;
 import javax.swing.JLabel;
@@ -17,12 +18,14 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import modelo.CargoBEAN;
 import modelo.local.SharedPreferencesBEAN;
+import modelo.local.SharedPreferencesEmpresaBEAN;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import sync.SyncDefault;
 import visao.util.Carregamento;
 import sync.LojaAPI;
+import util.ManipularImagem;
 
 /**
  *
@@ -42,6 +45,7 @@ public class FRMCargo extends javax.swing.JFrame {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
         atualizaTabela();
+        setDados();
     }
 
     /**
@@ -74,7 +78,7 @@ public class FRMCargo extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tabelaCargo = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        lbLogo = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         comboPermicao = new javax.swing.JComboBox<>();
 
@@ -203,22 +207,22 @@ public class FRMCargo extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/logo2.jpg"))); // NOI18N
+        lbLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/logo2.jpg"))); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -226,7 +230,7 @@ public class FRMCargo extends javax.swing.JFrame {
         jLabel7.setText("*Permição:");
 
         comboPermicao.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        comboPermicao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ADM", "GERENTE", "GARCOM", "CAIXA" }));
+        comboPermicao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ADM", "GERENTE", "TECNICO", "CAIXA" }));
         comboPermicao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboPermicaoActionPerformed(evt);
@@ -288,19 +292,19 @@ public class FRMCargo extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jtfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1))
-                        .addGap(46, 46, 46)
+                        .addGap(41, 41, 41)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(55, 55, 55)
+                        .addGap(41, 41, 41)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(41, 41, 41)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(comboPermicao, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))
-                        .addGap(92, 92, 92)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -489,7 +493,6 @@ public class FRMCargo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel79;
@@ -503,6 +506,7 @@ public class FRMCargo extends javax.swing.JFrame {
     private javax.swing.JTextArea jtaAtribuicao;
     private javax.swing.JTextArea jtaRequisitos;
     private javax.swing.JTextField jtfNome;
+    private javax.swing.JLabel lbLogo;
     private javax.swing.JTable tabelaCargo;
     // End of variables declaration//GEN-END:variables
 
@@ -750,5 +754,15 @@ public class FRMCargo extends javax.swing.JFrame {
             }
         });
 
+    }
+     private void setDados() {
+        ControleLogin l = new ControleLogin();
+        SharedPreferencesEmpresaBEAN e = l.listarEmpresa();
+        if (e != null) {
+            if (e.getEmpLogo() != null) {
+                ManipularImagem m = new ManipularImagem();
+                m.exibiImagemLabel(e.getEmpLogo(), lbLogo);
+            }
+        }
     }
 }

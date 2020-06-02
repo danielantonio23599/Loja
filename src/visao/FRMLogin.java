@@ -436,7 +436,7 @@ public class FRMLogin extends javax.swing.JFrame {
                                             case "CAIXA":
                                                 p1.setVisible(true);
                                                 break;
-                                            case "GARCOM":
+                                            case "TECNICO":
                                                 p2.setVisible(true);
                                                 break;
                                             case "GERENTE":

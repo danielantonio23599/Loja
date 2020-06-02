@@ -6,6 +6,7 @@
 package visao;
 
 import com.google.gson.Gson;
+import controle.SharedPEmpresa_Control;
 
 import controle.SharedP_Control;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import modelo.DespesaBEAN;
 import modelo.local.SharedPreferencesBEAN;
+import modelo.local.SharedPreferencesEmpresaBEAN;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,6 +31,12 @@ public class FRMDespesa extends javax.swing.JFrame {
 
     private DefaultTableModel dTable;
     private ArrayList<DespesaBEAN> dados;
+    private FRMCaixa c;
+
+    public void setC(FRMCaixa c) {
+        this.c = c;
+    }
+
     /**
      * Creates new form FRMDespesa
      */
@@ -260,9 +268,9 @@ public class FRMDespesa extends javax.swing.JFrame {
 
             }
         });
-        SharedPreferencesBEAN sh = SharedP_Control.listar();
+        SharedPreferencesEmpresaBEAN sh = SharedPEmpresa_Control.listar();
         LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
-        final Call<Void> call = api.incluirDespesas(new Gson().toJson(d), sh.getFunEmail(), sh.getFunSenha());
+        final Call<Void> call = api.incluirDespesas(new Gson().toJson(d), sh.getEmpEmail(), sh.getEmpSenha());
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -275,7 +283,11 @@ public class FRMDespesa extends javax.swing.JFrame {
                         SwingUtilities.invokeLater(new Runnable() {
                             public void run() {
                                 JOptionPane.showMessageDialog(null, response.headers().get("sucesso"));
+                                if (c != null) {
+                                    c.listarDespesas();
+                                }
                                 a.setVisible(false);
+
                                 dispose();
                             }
                         });

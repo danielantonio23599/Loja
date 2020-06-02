@@ -22,6 +22,16 @@ public class Venda {
     private int entrega;
     private String cliente;
     private String data;
+    private Float devolucao;
+
+    public Float getDevolucao() {
+        return devolucao;
+    }
+
+    public void setDevolucao(Float devolucao) {
+        this.devolucao = devolucao;
+    }
+    
 
     public int getCodigo() {
         return codigo;

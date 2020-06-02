@@ -9,13 +9,17 @@ package modelo;
  *
  * @author Daniel
  */
-public class ExcluzaoBEAN {
+public class DevolucaoBEAN {
 
     private int codigo;
     private String motivo;
     private String time;
-    private String funcionarioN;
-    private int funcionario;
+    private Float valor;
+    private int caixa;
+    // pedido
+    private Float quantidade;
+    private String produto;
+    
 
     public int getCodigo() {
         return codigo;
@@ -41,21 +45,39 @@ public class ExcluzaoBEAN {
         this.time = time;
     }
 
-    public String getFuncionarioN() {
-        return funcionarioN;
+    public Float getValor() {
+        return valor;
     }
 
-    public void setFuncionarioN(String funcionarioN) {
-        this.funcionarioN = funcionarioN;
+    public void setValor(Float valor) {
+        this.valor = valor;
     }
 
-    public int getFuncionario() {
-        return funcionario;
+    public int getCaixa() {
+        return caixa;
     }
 
-    public void setFuncionario(int funcionario) {
-        this.funcionario = funcionario;
+    public void setCaixa(int caixa) {
+        this.caixa = caixa;
     }
+
+    public Float getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(Float quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public String getProduto() {
+        return produto;
+    }
+
+    public void setProduto(String produto) {
+        this.produto = produto;
+    }
+
+  
 
     
 

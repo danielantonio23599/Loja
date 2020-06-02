@@ -9,7 +9,7 @@ import modelo.CaixaBEAN;
 import modelo.CargoBEAN;
 import modelo.DespesaBEAN;
 import modelo.EmpresaBEAN;
-import modelo.ExcluzaoBEAN;
+import modelo.DevolucaoBEAN;
 import modelo.FuncionarioBEAN;
 import modelo.Mesa;
 import modelo.ProdutoBEAN;
@@ -99,6 +99,10 @@ public interface LojaAPI {
     Call<Void> excluiProduto(@Field("produto") String produto, @Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha);
 
     @FormUrlEncoded
+    @POST("loja_server/DevolucaoPedido")
+    Call<Void> devolverPedido(@Field("devolucao") String devolucao, @Field("pedido") String pedido, @Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha);
+
+    @FormUrlEncoded
     @POST("restaurante_server/ListarProduto")
     Call<ProdutoBEAN> listarProduto(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha, @Field("produto") String cod);
 
@@ -123,11 +127,11 @@ public interface LojaAPI {
     Call<Void> fecharCaixa(@Field("caixa") String caixa, @Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha);
 
     @FormUrlEncoded
-    @POST("restaurante_server/IncluirDespesa")
+    @POST("loja_server/IncluirDespesa")
     Call<Void> incluirDespesas(@Field("despesa") String despesas, @Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha);
 
     @FormUrlEncoded
-    @POST("restaurante_server/ExcluirDespesa")
+    @POST("loja_server/ExcluirDespesa")
     Call<Void> excluiDespesa(@Field("despesa") String despesa, @Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha);
 
     @FormUrlEncoded
@@ -143,7 +147,7 @@ public interface LojaAPI {
     Call<CaixaBEAN> listarCaixa(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha);
 
     @FormUrlEncoded
-    @POST("restaurante_server/ListarDespesas")
+    @POST("loja_server/ListarDespesas")
     Call<ArrayList<DespesaBEAN>> listarDespesas(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha);
 
     @FormUrlEncoded
@@ -212,11 +216,11 @@ public interface LojaAPI {
 
     @FormUrlEncoded
     @POST("restaurante_server/ListarExcluzaoMesa")
-    Call<ArrayList<ExcluzaoBEAN>> listarExcluzaoMesa(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha, @Field("mesa") String mesa);
+    Call<ArrayList<DevolucaoBEAN>> listarExcluzaoMesa(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha, @Field("mesa") String mesa);
 
     @FormUrlEncoded
-    @POST("restaurante_server/ListarExcluzaoCaixa")
-    Call<ArrayList<ExcluzaoBEAN>> listarExcluzaoCaixa(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha);
+    @POST("loja_server/ListarDevolucaoCaixa")
+    Call<ArrayList<DevolucaoBEAN>> listarDevolucaoCaixa(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha);
 
     @FormUrlEncoded
     @POST("restaurante_server/AtualizaVenda")

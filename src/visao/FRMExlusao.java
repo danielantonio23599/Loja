@@ -12,7 +12,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import modelo.ExcluzaoBEAN;
+import modelo.DevolucaoBEAN;
 import modelo.local.SharedPreferencesBEAN;
 import modelo.local.SharedPreferencesEmpresaBEAN;
 import retrofit2.Call;
@@ -66,7 +66,7 @@ public class FRMExlusao extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        painelcancelados.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pedidos Cancelados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
+        painelcancelados.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pedidos Devolvidos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
         tabelaProCancelados.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         tabelaProCancelados.setModel(new javax.swing.table.DefaultTableModel(
@@ -240,21 +240,20 @@ private DefaultTableModel criaTabelaProdutosExcluidos() {
         listarExclusaoCaixa();
        
     }
-
-    private void preencheTabelaCancelados(ArrayList<ExcluzaoBEAN> dados) {
+ private void preencheTabelaDevolvidos(ArrayList<DevolucaoBEAN> dados) {
         dTable = criaTabelaProdutosExcluidos();
         //seta o nome das colunas da tabela
-
         dTable.addColumn("Código");
+        dTable.addColumn("Produto");
+        dTable.addColumn("QTD");
         dTable.addColumn("Motivo");
         dTable.addColumn("Hora");
-        dTable.addColumn("Funcionario");
-
+        dTable.addColumn("Valor");
         //pega os dados do ArrayList
         //cada célula do arrayList vira uma linha(row) na tabela
-        for (ExcluzaoBEAN dado : dados) {
-            dTable.addRow(new Object[]{dado.getCodigo(), dado.getMotivo(), dado.getTime(),
-                dado.getFuncionarioN()
+        for (DevolucaoBEAN dado : dados) {
+            dTable.addRow(new Object[]{dado.getCodigo(),dado.getProduto(),dado.getQuantidade(), dado.getMotivo(), dado.getTime(),
+                dado.getValor()
             });
         }
         //set o modelo da tabela
@@ -263,6 +262,7 @@ private DefaultTableModel criaTabelaProdutosExcluidos() {
         tabelaProCancelados.setRowSorter(tr);
 
     }
+  
 
     private void listarExclusaoCaixa() {
         Carregamento a = new Carregamento(this, true);
@@ -275,10 +275,10 @@ private DefaultTableModel criaTabelaProdutosExcluidos() {
         });
         SharedPreferencesEmpresaBEAN sh = SharedPEmpresa_Control.listar();
         LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
-        final Call<ArrayList<ExcluzaoBEAN>> call = api.listarExcluzaoCaixa(sh.getEmpEmail(), sh.getEmpSenha());
-        call.enqueue(new Callback<ArrayList<ExcluzaoBEAN>>() {
+        final Call<ArrayList<DevolucaoBEAN>> call = api.listarDevolucaoCaixa(sh.getEmpEmail(), sh.getEmpSenha());
+        call.enqueue(new Callback<ArrayList<DevolucaoBEAN>>() {
             @Override
-            public void onResponse(Call<ArrayList<ExcluzaoBEAN>> call, Response<ArrayList<ExcluzaoBEAN>> response) {
+            public void onResponse(Call<ArrayList<DevolucaoBEAN>> call, Response<ArrayList<DevolucaoBEAN>> response) {
                 System.out.println(response.isSuccessful());
                 if (response.isSuccessful()) {
                     String auth = response.headers().get("auth");
@@ -287,9 +287,9 @@ private DefaultTableModel criaTabelaProdutosExcluidos() {
 
                         SwingUtilities.invokeLater(new Runnable() {
                             public void run() {
-                                ArrayList<ExcluzaoBEAN> u = response.body();
+                                ArrayList<DevolucaoBEAN> u = response.body();
                                 a.setVisible(false);
-                                 preencheTabelaCancelados(u);
+                                 preencheTabelaDevolvidos(u);
                             }
                         });
 
@@ -315,7 +315,7 @@ private DefaultTableModel criaTabelaProdutosExcluidos() {
             }
 
             @Override
-            public void onFailure(Call<ArrayList<ExcluzaoBEAN>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<DevolucaoBEAN>> call, Throwable t) {
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
                         a.setVisible(false);
