@@ -2877,6 +2877,7 @@ public class FRMCaixa extends javax.swing.JFrame {
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         buscarProdutosVenda(jtfVenda.getText());
+        listarVenda();
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
     private void comboProdutoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_comboProdutoKeyPressed
@@ -3360,6 +3361,70 @@ public class FRMCaixa extends javax.swing.JFrame {
         }
         // atualizaMesas();
     }//GEN-LAST:event_jButton19ActionPerformed
+    public void listarVenda() {
+        Carregamento a = new Carregamento(this, true);
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+
+                a.setVisible(true);
+
+            }
+        });
+        SharedPreferencesEmpresaBEAN sh = SharedPEmpresa_Control.listar();
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
+        final Call<Venda> call = api.listarVenda(sh.getEmpEmail(), sh.getEmpSenha(), jtfVenda.getText());
+        call.enqueue(new Callback<Venda>() {
+            @Override
+            public void onResponse(Call<Venda> call, Response<Venda> response) {
+                System.out.println(response.isSuccessful());
+                if (response.isSuccessful()) {
+                    String auth = response.headers().get("auth");
+                    if (auth.equals("1")) {
+                        System.out.println("Login correto");
+
+                        SwingUtilities.invokeLater(new Runnable() {
+                            public void run() {
+                                Venda u = response.body();
+                                a.setVisible(false);
+                                if (u != null) {
+                                    setVenda(u);
+                                }
+                            }
+                        });
+
+                    } else {
+                        SwingUtilities.invokeLater(new Runnable() {
+                            public void run() {
+                                a.setVisible(false);
+                            }
+                        });
+                        System.out.println("Login incorreto");
+                        // senha ou usuario incorreto
+
+                    }
+                } else {
+                    SwingUtilities.invokeLater(new Runnable() {
+                        public void run() {
+                            a.setVisible(false);
+                        }
+                    });
+                    System.out.println("Login incorreto- fora do ar");
+                    //servidor fora do ar
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Venda> call, Throwable t) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        a.setVisible(false);
+                    }
+                });
+            }
+        });
+
+    }
+
     public void setVenda(Venda v) {
         jtfVenda.setText(v.getCodigo() + "");
         jtfCliente.setText(v.getCliente() + "");
@@ -3401,7 +3466,10 @@ public class FRMCaixa extends javax.swing.JFrame {
     }//GEN-LAST:event_jtfFreteKeyTyped
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        FRMClientes c = new FRMClientes();
+        c.setC(this);
+        c.setVenda(Integer.parseInt(jtfVenda.getText()));
+        c.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
     private void bloqueaLetras(java.awt.event.KeyEvent evt) {
         String caracteres = "0987654321.";
@@ -3766,9 +3834,7 @@ public class FRMCaixa extends javax.swing.JFrame {
         DefaultTableModel dTable = new DefaultTableModel() {
             //Define o tipo dos campos (coluna) na mesma ordem que as colunas foram criadas
             Class[] types = new Class[]{
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
-                    , java.lang.String.class, java.lang.String.class
-                    , java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             //define se os campos podem ser editados na propria tabela
             boolean[] canEdit = new boolean[]{
@@ -4136,7 +4202,7 @@ public class FRMCaixa extends javax.swing.JFrame {
         //pega os dados do ArrayList
         //cada célula do arrayList vira uma linha(row) na tabela
         for (DevolucaoBEAN dado : dados) {
-            dTable.addRow(new Object[]{dado.getCodigo(),dado.getProduto(),dado.getQuantidade(), dado.getMotivo(), dado.getTime(),
+            dTable.addRow(new Object[]{dado.getCodigo(), dado.getProduto(), dado.getQuantidade(), dado.getMotivo(), dado.getTime(),
                 dado.getValor()
             });
         }
@@ -4591,7 +4657,7 @@ public class FRMCaixa extends javax.swing.JFrame {
         });
     }
 
-  /*  private void listarDespesas() {
+    /*  private void listarDespesas() {
         Carregamento a = new Carregamento(this, true);
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -4649,7 +4715,6 @@ public class FRMCaixa extends javax.swing.JFrame {
             }
         });
     }*/
-
     private void listarValoresCaixa() {
         Carregamento a = new Carregamento(this, true);
         SwingUtilities.invokeLater(new Runnable() {
@@ -4678,11 +4743,11 @@ public class FRMCaixa extends javax.swing.JFrame {
                                 jtfFaturamento.setText(u.getFaturamento() + "");
                                 jtfSangria.setText(u.getSangria() + "");
                                 jtfDespesas.setText(u.getDespesas() + "");
-                                jtfDevolucao.setText(u.getDevolucao()+"");
+                                jtfDevolucao.setText(u.getDevolucao() + "");
                                 jtfFaturamentoLiquido.setText(u.getSaldo() + "");
                                 lbSaldo.setText(u.getSaldo() + "");
                                 lbTotalVendido.setText(u.getFaturamento() + "");
-                                lbTotalDevalvido.setText(u.getDevolucao()+"");
+                                lbTotalDevalvido.setText(u.getDevolucao() + "");
                                 jtfCaixa.setText(u.getCaixa() + "");
                                 lbSaldoCaixa.setText(u.getSaldo() + "");
                             }
@@ -5533,6 +5598,7 @@ public class FRMCaixa extends javax.swing.JFrame {
             }
         });
     }
+
     private void setDados() {
         ControleLogin l = new ControleLogin();
         SharedPreferencesEmpresaBEAN e = l.listarEmpresa();

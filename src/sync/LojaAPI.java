@@ -7,6 +7,7 @@ import modelo.AdmicaoBEAN;
 import modelo.Caixa;
 import modelo.CaixaBEAN;
 import modelo.CargoBEAN;
+import modelo.ClienteBEAN;
 import modelo.DespesaBEAN;
 import modelo.EmpresaBEAN;
 import modelo.DevolucaoBEAN;
@@ -95,6 +96,22 @@ public interface LojaAPI {
     Call<ArrayList<ProdutoBEAN>> listarProdutos(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha);
 
     @FormUrlEncoded
+    @POST("loja_server/ListarClientes")
+    Call<ArrayList<ClienteBEAN>> listarClientes(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha);
+
+    @FormUrlEncoded
+    @POST("loja_server/ListarClientes")
+    Call<ArrayList<ClienteBEAN>> pesquisarClientes(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha, @Field("nome") String nome);
+
+    @FormUrlEncoded
+    @POST("loja_server/AdicionarClienteVenda")
+    Call<Void> adicionarClienteVenda(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha, @Field("venda") String venda, @Field("cliente") String cliente);
+
+    @FormUrlEncoded
+    @POST("loja_server/AdicionarCliente")
+    Call<Void> adicionarClientes(@Field("cliente") String cliente,@Field("endereco") String endereco);
+
+    @FormUrlEncoded
     @POST("restaurante_server/ExcluirProduto")
     Call<Void> excluiProduto(@Field("produto") String produto, @Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha);
 
@@ -181,6 +198,10 @@ public interface LojaAPI {
     @FormUrlEncoded
     @POST("loja_server/ListarProdutosVenda")
     Call<ArrayList<ProdutosGravados>> listarProdutosVenda(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha, @Field("venda") String mesa);
+
+    @FormUrlEncoded
+    @POST("loja_server/ListarVenda")
+    Call<Venda> listarVenda(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha, @Field("venda") String mesa);
 
     @FormUrlEncoded
     @POST("loja_server/AbrirVenda")

@@ -887,6 +887,11 @@ public class FRMVenda extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton1.setText("CLIENTE");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton2.setText("VENDA");
@@ -1315,6 +1320,7 @@ public class FRMVenda extends javax.swing.JFrame {
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         buscarProdutosVenda(jtfVenda.getText());
+        listarVenda();
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
     private void comboProdutoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_comboProdutoKeyPressed
@@ -1518,7 +1524,7 @@ public class FRMVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRelatorios1ActionPerformed
 
     private void btnRelatorios2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatorios2ActionPerformed
-       FRMListaVendas l = new FRMListaVendas();
+        FRMListaVendas l = new FRMListaVendas();
         l.setV(this);
         l.setDevolucao(true);
         l.setVisible(true);
@@ -1551,6 +1557,14 @@ public class FRMVenda extends javax.swing.JFrame {
     private void jtfFreteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfFreteKeyTyped
         bloqueaLetras(evt);
     }//GEN-LAST:event_jtfFreteKeyTyped
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        FRMClientes c = new FRMClientes();
+        c.setV(this);
+        c.setVenda(Integer.parseInt(jtfVenda.getText()));
+        c.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private void bloqueaLetras(java.awt.event.KeyEvent evt) {
         String caracteres = "0987654321.";
         if (!caracteres.contains(evt.getKeyChar() + "")) {
@@ -2006,6 +2020,70 @@ public class FRMVenda extends javax.swing.JFrame {
 
     }
 
+    public void listarVenda() {
+        Carregamento a = new Carregamento(this, true);
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+
+                a.setVisible(true);
+
+            }
+        });
+        SharedPreferencesEmpresaBEAN sh = SharedPEmpresa_Control.listar();
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
+        final Call<Venda> call = api.listarVenda(sh.getEmpEmail(), sh.getEmpSenha(), jtfVenda.getText());
+        call.enqueue(new Callback<Venda>() {
+            @Override
+            public void onResponse(Call<Venda> call, Response<Venda> response) {
+                System.out.println(response.isSuccessful());
+                if (response.isSuccessful()) {
+                    String auth = response.headers().get("auth");
+                    if (auth.equals("1")) {
+                        System.out.println("Login correto");
+
+                        SwingUtilities.invokeLater(new Runnable() {
+                            public void run() {
+                                Venda u = response.body();
+                                a.setVisible(false);
+                                if (u != null) {
+                                    setVenda(u);
+                                }
+                            }
+                        });
+
+                    } else {
+                        SwingUtilities.invokeLater(new Runnable() {
+                            public void run() {
+                                a.setVisible(false);
+                            }
+                        });
+                        System.out.println("Login incorreto");
+                        // senha ou usuario incorreto
+
+                    }
+                } else {
+                    SwingUtilities.invokeLater(new Runnable() {
+                        public void run() {
+                            a.setVisible(false);
+                        }
+                    });
+                    System.out.println("Login incorreto- fora do ar");
+                    //servidor fora do ar
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Venda> call, Throwable t) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        a.setVisible(false);
+                    }
+                });
+            }
+        });
+
+    }
+
     private void buscarProdutosVenda(String mesa) {
         Carregamento a = new Carregamento(this, true);
         SwingUtilities.invokeLater(new Runnable() {
@@ -2356,6 +2434,7 @@ public class FRMVenda extends javax.swing.JFrame {
         });
 
     }
+
     private void setDados() {
         ControleLogin l = new ControleLogin();
         SharedPreferencesEmpresaBEAN e = l.listarEmpresa();
