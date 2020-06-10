@@ -217,7 +217,6 @@ public class FRMVenda extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jLabel26 = new javax.swing.JLabel();
         radioAvista = new javax.swing.JRadioButton();
-        radioParcelado = new javax.swing.JRadioButton();
         radioAprazo = new javax.swing.JRadioButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
@@ -416,15 +415,6 @@ public class FRMVenda extends javax.swing.JFrame {
             }
         });
 
-        pagamento.add(radioParcelado);
-        radioParcelado.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        radioParcelado.setText("Pacelado");
-        radioParcelado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioParceladoActionPerformed(evt);
-            }
-        });
-
         pagamento.add(radioAprazo);
         radioAprazo.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         radioAprazo.setText("À prazo");
@@ -437,11 +427,9 @@ public class FRMVenda extends javax.swing.JFrame {
                 .addComponent(jLabel26)
                 .addGap(28, 28, 28)
                 .addComponent(radioAvista)
-                .addGap(63, 63, 63)
-                .addComponent(radioParcelado)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(radioAprazo)
-                .addContainerGap())
+                .addGap(96, 96, 96))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -450,7 +438,6 @@ public class FRMVenda extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel26)
                     .addComponent(radioAvista)
-                    .addComponent(radioParcelado)
                     .addComponent(radioAprazo))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -496,11 +483,11 @@ public class FRMVenda extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(116, 116, 116)
                 .addComponent(jLabel23)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(26, 26, 26)
                 .addComponent(radioDesc)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(radioTotal)
-                .addGap(62, 62, 62))
+                .addGap(100, 100, 100))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -665,7 +652,7 @@ public class FRMVenda extends javax.swing.JFrame {
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 147, Short.MAX_VALUE)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jButton20, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1264,10 +1251,6 @@ public class FRMVenda extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_radioAvistaActionPerformed
 
-    private void radioParceladoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioParceladoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_radioParceladoActionPerformed
-
     private void jtfTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfTotalActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfTotalActionPerformed
@@ -1531,7 +1514,8 @@ public class FRMVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRelatorios2ActionPerformed
 
     private void btnRelatorios3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatorios3ActionPerformed
-        // TODO add your handling code here:
+      FRMClientes c = new FRMClientes();
+      c.setVisible(true);
     }//GEN-LAST:event_btnRelatorios3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -1678,7 +1662,6 @@ public class FRMVenda extends javax.swing.JFrame {
     private javax.swing.JRadioButton radioAprazo;
     private javax.swing.JRadioButton radioAvista;
     private javax.swing.JRadioButton radioDesc;
-    private javax.swing.JRadioButton radioParcelado;
     private javax.swing.JRadioButton radioTotal;
     private javax.swing.JTable tabelaProdutosBalcao;
     private javax.swing.JTable tabelaProdutosF;
@@ -1913,6 +1896,11 @@ public class FRMVenda extends javax.swing.JFrame {
             venda.setDesconto(Float.parseFloat(jtfDesconto.getText()));
         } else {
             venda.setDesconto(0.0f);
+        }
+        if (radioAprazo.isSelected()) {
+            venda.setStatus("Anotada");
+        } else {
+            venda.setStatus("Fechada");
         }
         venda.setFrete(Float.parseFloat(jtfFrete.getText()));
         venda.setValorFin(Float.parseFloat(lbTotal.getText()));

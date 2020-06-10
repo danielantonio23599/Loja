@@ -249,7 +249,6 @@ public class FRMCaixa extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jLabel26 = new javax.swing.JLabel();
         radioAvista = new javax.swing.JRadioButton();
-        radioParcelado = new javax.swing.JRadioButton();
         radioAprazo = new javax.swing.JRadioButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
@@ -579,15 +578,6 @@ public class FRMCaixa extends javax.swing.JFrame {
             }
         });
 
-        pagamento.add(radioParcelado);
-        radioParcelado.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        radioParcelado.setText("Pacelado");
-        radioParcelado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioParceladoActionPerformed(evt);
-            }
-        });
-
         pagamento.add(radioAprazo);
         radioAprazo.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         radioAprazo.setText("À prazo");
@@ -598,13 +588,11 @@ public class FRMCaixa extends javax.swing.JFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addComponent(jLabel26)
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(radioAvista)
-                .addGap(63, 63, 63)
-                .addComponent(radioParcelado)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                .addGap(86, 86, 86)
                 .addComponent(radioAprazo)
-                .addContainerGap())
+                .addGap(74, 74, 74))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -613,7 +601,6 @@ public class FRMCaixa extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel26)
                     .addComponent(radioAvista)
-                    .addComponent(radioParcelado)
                     .addComponent(radioAprazo))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -625,6 +612,7 @@ public class FRMCaixa extends javax.swing.JFrame {
 
         valorgrupo.add(radioTotal);
         radioTotal.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        radioTotal.setSelected(true);
         radioTotal.setText("Total");
         radioTotal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -660,7 +648,7 @@ public class FRMCaixa extends javax.swing.JFrame {
                 .addComponent(jLabel23)
                 .addGap(94, 94, 94)
                 .addComponent(radioDesc)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
                 .addComponent(radioTotal)
                 .addGap(78, 78, 78))
         );
@@ -2820,10 +2808,6 @@ public class FRMCaixa extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_radioAvistaActionPerformed
 
-    private void radioParceladoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioParceladoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_radioParceladoActionPerformed
-
     private void jtfTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfTotalActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfTotalActionPerformed
@@ -2847,7 +2831,7 @@ public class FRMCaixa extends javax.swing.JFrame {
     }//GEN-LAST:event_radioTotalMouseClicked
 
     private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
-        // atualizaMesas();
+        mudarTela("index");
     }//GEN-LAST:event_jButton22ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
@@ -2867,7 +2851,7 @@ public class FRMCaixa extends javax.swing.JFrame {
         int reply = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
             atualizaVenda();
-            // atualizaMesas();
+            mudarTela("index");
         }
     }//GEN-LAST:event_jButton21ActionPerformed
 
@@ -3275,7 +3259,87 @@ public class FRMCaixa extends javax.swing.JFrame {
     }//GEN-LAST:event_jtfDescontoPKeyPressed
 
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
-        // TODO add your handling code here:
+        String message = "Deseja realmente fechar a mesa?";
+        String title = "Confirmação";
+        int reply = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            VendaBEAN v = getDadosVenda();
+            LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
+            SharedPreferencesEmpresaBEAN sh = SharedPEmpresa_Control.listar();
+            Carregamento a = new Carregamento(this, true);
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    a.setVisible(true);
+
+                }
+            });
+
+            final Call<ResponseBody> call = api.atualizaVendaCupom(new Gson().toJson(v), sh.getEmpEmail(), sh.getEmpSenha());
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    System.out.println(response.isSuccessful());
+                    System.out.println(response);
+                    if (response.isSuccessful()) {
+                        String auth = response.headers().get("auth");
+                        if (auth.equals("1")) {
+                            String nome = response.headers().get("nome");
+                            if (!nome.equals("0")) {
+                                boolean writtenToDisk = SalvaDownload.writeResponseBodyToDisk(response.body(), nome);
+                                System.out.println("Login correto");
+                                SwingUtilities.invokeLater(new Runnable() {
+                                    public void run() {
+                                        a.setVisible(false);
+
+                                    }
+                                });
+                                System.out.println("file download was a success? " + writtenToDisk);
+                            } else {
+                                SwingUtilities.invokeLater(new Runnable() {
+                                    public void run() {
+                                        a.setVisible(false);
+
+                                    }
+                                });
+                                JOptionPane.showMessageDialog(null, "Houve algum erro no gerar arquivo!");
+                            }
+                        } else {
+                            SwingUtilities.invokeLater(new Runnable() {
+                                public void run() {
+                                    a.setVisible(false);
+
+                                }
+                            });
+                            System.out.println("Login incorreto");
+                            // senha ou usuario incorreto
+
+                        }
+                    } else {
+                        SwingUtilities.invokeLater(new Runnable() {
+                            public void run() {
+                                a.setVisible(false);
+
+                            }
+                        });
+                        System.out.println("Login incorreto- fora do ar");
+                        //servidor fora do ar
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    System.out.println("Login incorreto- erro");
+                    SwingUtilities.invokeLater(new Runnable() {
+
+                        public void run() {
+                            a.setVisible(false);
+
+                        }
+                    });
+                }
+            });
+        }
+
     }//GEN-LAST:event_jButton20ActionPerformed
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
@@ -3671,7 +3735,6 @@ public class FRMCaixa extends javax.swing.JFrame {
     private javax.swing.JRadioButton radioAprazo;
     private javax.swing.JRadioButton radioAvista;
     private javax.swing.JRadioButton radioDesc;
-    private javax.swing.JRadioButton radioParcelado;
     private javax.swing.JRadioButton radioTotal;
     private javax.swing.JPanel rola;
     private javax.swing.JScrollPane rolagem;
@@ -3932,6 +3995,11 @@ public class FRMCaixa extends javax.swing.JFrame {
             venda.setDesconto(Float.parseFloat(jtfDesconto.getText()));
         } else {
             venda.setDesconto(0.0f);
+        }
+        if (radioAprazo.isSelected()) {
+            venda.setStatus("Anotada");
+        } else {
+            venda.setStatus("Fechada");
         }
         venda.setFrete(Float.parseFloat(jtfFrete.getText()));
         venda.setValorFin(Float.parseFloat(lbTotal.getText()));

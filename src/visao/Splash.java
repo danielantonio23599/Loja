@@ -20,6 +20,7 @@ import sync.SyncDefault;
 import util.Time;
 import visao.util.FRMConfiguracao;
 import sync.LojaAPI;
+import util.Criptografia;
 
 /**
  *
@@ -27,11 +28,14 @@ import sync.LojaAPI;
  */
 public final class Splash extends javax.swing.JFrame {
 
+    private ControleLogin c = new ControleLogin();
+
     /**
      * Creates new form Splash
      */
     public Splash() {
         initComponents();
+
         setLocationRelativeTo(null);
         onBackgroud();
 
@@ -40,21 +44,73 @@ public final class Splash extends javax.swing.JFrame {
     private void onBackgroud() {
         Runnable r = new Runnable() {
             public void run() {
-                SharedPreferencesEmpresaBEAN e = SharedPEmpresa_Control.listar();
+                SharedPreferencesEmpresaBEAN e = SharedPEmpresa_Control.listarLogin();
                 if (e.getEmpCodigo() == 0) {
                     FRMLoginEmpresa le = new FRMLoginEmpresa();
                     le.setVisible(true);
                     finalizar();
 
                 } else {
-                    //FRMLogin l = new FRMLogin();
-                    //l.setVisible(true);
+                    atualizarEmpresa(e.getEmpEmail(), e.getEmpSenha());
                     listarCaixa();
                 }
             }
+
         };
         new Thread(r).start();
 
+    }
+
+    private void atualizarEmpresa(String email, String senha) {
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
+        final Call<SharedPreferencesEmpresaBEAN> call = api.fazLoginEmpresa(email, Criptografia.criptografar(senha));
+        SharedPreferencesEmpresaBEAN u = null;
+        call.enqueue(new Callback<SharedPreferencesEmpresaBEAN>() {
+            @Override
+            public void onResponse(Call<SharedPreferencesEmpresaBEAN> call, Response<SharedPreferencesEmpresaBEAN> response) {
+
+                System.out.println(response);
+                if (response.isSuccessful()) {
+                    String auth = response.headers().get("auth");
+                    if (auth.equals("1")) {
+                        System.out.println("Login correto");
+                        SharedPreferencesEmpresaBEAN u = response.body();
+                        SwingUtilities.invokeLater(new Runnable() {
+                            public void run() {
+                                if (u != null) {
+                                    u.setEmpSenha(senha);
+                                    c.logEmpresa(u);
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Login Invalido");
+                                }
+
+                            }
+                        });
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Login Incorreto");
+                        System.out.println("Login incorreto");
+                        // senha ou usuario incorreto
+
+                    }
+                } else {
+
+                    JOptionPane.showMessageDialog(null, "Servidor não responde!!");
+
+                    //servidor fora do ar
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<SharedPreferencesEmpresaBEAN> call, Throwable t) {
+                //Servidor fora do ar
+
+                JOptionPane.showMessageDialog(null, "Login Incorreto erro");
+                System.out.println("Login incorreto");
+
+            }
+        });
     }
 
     public void listarCaixa() {

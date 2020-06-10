@@ -161,6 +161,11 @@ public class FRMClientes extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tabelaClientes);
 
+        jtfPesquisa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfPesquisaActionPerformed(evt);
+            }
+        });
         jtfPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jtfPesquisaKeyTyped(evt);
@@ -226,9 +231,11 @@ public class FRMClientes extends javax.swing.JFrame {
     private void tabelaClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaClientesMouseClicked
         int linha = tabelaClientes.getSelectedRow();
         // System.out.println(linha);
-        if (linha >= 0) {
-            int c = cliente.get(linha).getCodigo();
-            adicionarClienteVenda(c);
+        if (c != null || v != null) {
+            if (linha >= 0) {
+                int c = cliente.get(linha).getCodigo();
+                adicionarClienteVenda(c);
+            }
         }
     }//GEN-LAST:event_tabelaClientesMouseClicked
     private void adicionarClienteVenda(int cliente) {
@@ -302,18 +309,17 @@ public class FRMClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPesquisaActionPerformed
 
     private void jtfPesquisaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfPesquisaKeyTyped
-        if (KeyEvent.VK_ENTER == evt.getKeyCode()) {
-            listarPorConsulta();
-        } else {
-            evt.consume();
-        }
-
+      
     }//GEN-LAST:event_jtfPesquisaKeyTyped
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         FRMCadastroCliente cad = new FRMCadastroCliente();
         cad.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jtfPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfPesquisaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfPesquisaActionPerformed
 
     /**
      * @param args the command line arguments

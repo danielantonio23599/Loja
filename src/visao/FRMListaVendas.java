@@ -20,6 +20,7 @@ import retrofit2.Response;
 import sync.LojaAPI;
 import sync.SyncDefault;
 import util.Time;
+import visao.util.AlertVenda;
 import visao.util.Carregamento;
 import visao.util.FRMDevolucaoProduto;
 
@@ -170,6 +171,8 @@ public class FRMListaVendas extends javax.swing.JFrame {
 
         jLabel2.setText("Até a Data :");
 
+        jtfPesquisa.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+
         try{    javax.swing.text.MaskFormatter cpf= new javax.swing.text.MaskFormatter("##-##-####");    jtfDataIn = new javax.swing.JFormattedTextField(cpf); }    catch (Exception e){ }
 
         try{    javax.swing.text.MaskFormatter cpf= new javax.swing.text.MaskFormatter("##-##-####");    jtfDataFin = new javax.swing.JFormattedTextField(cpf); }    catch (Exception e){ }
@@ -179,7 +182,8 @@ public class FRMListaVendas extends javax.swing.JFrame {
             }
         });
 
-        comboStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Selecione o Status---", "fechada", "aberta", "Atrazada", "Cancelada" }));
+        comboStatus.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        comboStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Selecione o Status---", "Fechada", "Aberta", "Anotada", "Atrazada", "Cancelada" }));
 
         jLabel3.setText("Status de Venda");
 
@@ -254,16 +258,15 @@ public class FRMListaVendas extends javax.swing.JFrame {
                         .addComponent(jLabel3))
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnPesquisa)
-                        .addComponent(comboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jtfDataFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtfPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(btnStatus)
-                    .addComponent(btnData))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(jtfDataFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jtfPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(comboStatus))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -283,6 +286,14 @@ public class FRMListaVendas extends javax.swing.JFrame {
 
                 d.setVisible(true);
                 dispose();
+            }
+
+        } else {
+            int linha = tabelaVendas.getSelectedRow();
+            if (linha >= 0) {
+                AlertVenda v = new AlertVenda();
+                v.setVenda(venda.get(linha).getCodigo());
+                v.setVisible(true);
             }
 
         }

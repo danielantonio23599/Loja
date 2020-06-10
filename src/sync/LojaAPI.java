@@ -109,7 +109,7 @@ public interface LojaAPI {
 
     @FormUrlEncoded
     @POST("loja_server/AdicionarCliente")
-    Call<Void> adicionarClientes(@Field("cliente") String cliente,@Field("endereco") String endereco);
+    Call<Void> adicionarClientes(@Field("cliente") String cliente, @Field("endereco") String endereco);
 
     @FormUrlEncoded
     @POST("restaurante_server/ExcluirProduto")
@@ -248,8 +248,20 @@ public interface LojaAPI {
     Call<Void> atualizaVenda(@Field("venda") String venda, @Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha);
 
     @FormUrlEncoded
-    @POST("restaurante_server/AtualizaVendaNota")
+    @POST("loja_server/AtualizaVendaNota")
     Call<ResponseBody> atualizaVendaNota(@Field("venda") String venda, @Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha);
+
+    @FormUrlEncoded
+    @POST("loja_server/AtualizaVendaCupom")
+    Call<ResponseBody> atualizaVendaCupom(@Field("venda") String venda, @Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha);
+
+    @FormUrlEncoded
+    @POST("loja_server/GerarCupomVenda")
+    Call<ResponseBody> geraCupomVenda(@Field("venda") String venda, @Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha);
+
+    @FormUrlEncoded
+    @POST("loja_server/GerarNotaVenda")
+    Call<ResponseBody> geraNotaVenda(@Field("venda") String venda, @Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha);
 
     @FormUrlEncoded
     @POST("restaurante_server/InserirPedidoMesa")

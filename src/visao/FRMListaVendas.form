@@ -79,18 +79,16 @@
                   <Component id="jLabel4" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                      <Component id="btnPesquisa" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="comboStatus" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jtfDataFin" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jtfPesquisa" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
-                      </Group>
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                  <Component id="btnPesquisa" alignment="1" max="32767" attributes="0"/>
+                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                      <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jtfDataFin" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jtfPesquisa" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="btnStatus" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnData" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnStatus" max="32767" attributes="0"/>
+                  <Component id="btnData" max="32767" attributes="0"/>
+                  <Component id="comboStatus" alignment="1" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="25" max="32767" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="438" max="-2" attributes="0"/>
@@ -180,6 +178,11 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtfPesquisa">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Times New Roman" size="14" style="0"/>
+        </Property>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtfDataIn">
       <AuxValues>
@@ -196,13 +199,17 @@
     </Component>
     <Component class="javax.swing.JComboBox" name="comboStatus">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Times New Roman" size="14" style="0"/>
+        </Property>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="5">
+          <StringArray count="6">
             <StringItem index="0" value="--Selecione o Status---"/>
-            <StringItem index="1" value="fechada"/>
-            <StringItem index="2" value="aberta"/>
-            <StringItem index="3" value="Atrazada"/>
-            <StringItem index="4" value="Cancelada"/>
+            <StringItem index="1" value="Fechada"/>
+            <StringItem index="2" value="Aberta"/>
+            <StringItem index="3" value="Anotada"/>
+            <StringItem index="4" value="Atrazada"/>
+            <StringItem index="5" value="Cancelada"/>
           </StringArray>
         </Property>
       </Properties>
