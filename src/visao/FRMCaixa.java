@@ -2785,7 +2785,7 @@ public class FRMCaixa extends javax.swing.JFrame {
     }//GEN-LAST:event_jtfNota2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        mudarTela("index");
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jtfFaturamentoLiquidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfFaturamentoLiquidoActionPerformed
@@ -2963,7 +2963,7 @@ public class FRMCaixa extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton25ActionPerformed
 
     private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
-        // TODO add your handling code here:
+        mudarTela("index");
     }//GEN-LAST:event_jButton26ActionPerformed
 
     private void tabelaProCanceladosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProCanceladosMouseClicked
@@ -3019,8 +3019,8 @@ public class FRMCaixa extends javax.swing.JFrame {
                                         public void run() {
                                             JOptionPane.showMessageDialog(null, response.headers().get("sucesso"));
                                             atualizaTabelaprodusClose();
-
                                             a.setVisible(false);
+                                            mudarTela("index");
 
                                         }
                                     });

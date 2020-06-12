@@ -68,6 +68,7 @@ public class FRMProduto extends javax.swing.JFrame {
             }
         }
     }
+
     public FRMProduto() {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
@@ -838,7 +839,7 @@ public class FRMProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_jtfNomeKeyPressed
 
     private void jtfNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfNomeKeyReleased
-       
+
     }//GEN-LAST:event_jtfNomeKeyReleased
 
     private void jtfPrecoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfPrecoKeyTyped
@@ -1068,12 +1069,12 @@ public class FRMProduto extends javax.swing.JFrame {
         p.setCusto(Float.parseFloat(jtfCusto.getText() + ""));
         p.setQuantidade(Float.parseFloat(jtfQuantidade.getText() + ""));
         p.setDescricao(jtfDescricao.getText() + "");
-        p.setGarantia(Integer.parseInt(jtfGarantia.getText() + ""));
+        if (!jtfGarantia.getText().equals("")) {
+            p.setGarantia(Integer.parseInt(jtfGarantia.getText() + ""));
+        }
         p.setTipo(comboTipo.getSelectedItem() + "");
         if (lbFotoPedido.getIcon() != null) {
             p.setFoto(ManipularImagem.getImgBytes(imagem2));
-        } else if (cod != 0) {
-            p.setFoto(ManipularImagem.imageToByte(lbFotoPedido.getIcon()));
         } else {
             p.setFoto(null);
         }
@@ -1187,10 +1188,10 @@ public class FRMProduto extends javax.swing.JFrame {
         jtfCusto.setText(c.getCusto() + "");
         jtfQuantidade.setText(c.getQuantidade() + "");
         jtfGarantia.setText(c.getGarantia() + "");
-        jtfDescricao.setText(c.getDescricao());      
+        jtfDescricao.setText(c.getDescricao());
         comboTipo.setSelectedItem(c.getTipo());
         ManipularImagem m = new ManipularImagem();
-        m.exibiImagemLabel(c.getFoto(), lbFotoPedido);      
+        m.exibiImagemLabel(c.getFoto(), lbFotoPedido);
 
     }
 

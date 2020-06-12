@@ -20,6 +20,7 @@ import retrofit2.Response;
 import sync.LojaAPI;
 import sync.SyncDefault;
 import util.Time;
+import visao.util.AlertReceberVenda;
 import visao.util.AlertVenda;
 import visao.util.Carregamento;
 import visao.util.FRMDevolucaoProduto;
@@ -28,7 +29,7 @@ import visao.util.FRMDevolucaoProduto;
  *
  * @author Daniel
  */
-public class FRMListaVendas extends javax.swing.JFrame {
+public class FRMRecebimentoVendas extends javax.swing.JFrame {
 
     private FRMVenda v;
     private boolean devolucao = false;
@@ -90,7 +91,7 @@ public class FRMListaVendas extends javax.swing.JFrame {
     /**
      * Creates new form FRMListaVendas
      */
-    public FRMListaVendas() {
+    public FRMRecebimentoVendas() {
         initComponents();
         this.setLocationRelativeTo(null);
         listar();
@@ -127,7 +128,7 @@ public class FRMListaVendas extends javax.swing.JFrame {
 
         jLabel40.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel40.setText("VENDAS");
+        jLabel40.setText("RECEBIMENTO DE VENDAS");
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -182,7 +183,12 @@ public class FRMListaVendas extends javax.swing.JFrame {
         });
 
         comboStatus.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        comboStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Selecione o Status---", "Fechada", "Aberta", "Anotada", "Atrazada", "Cancelada" }));
+        comboStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Selecione o Status---", "Aberta", "Anotada", "Atrazada" }));
+        comboStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboStatusActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Status de Venda");
 
@@ -274,28 +280,18 @@ public class FRMListaVendas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tabelaVendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaVendasMouseClicked
-        if (devolucao) {
+        
             int linha = tabelaVendas.getSelectedRow();
             // System.out.println(linha);
+         
             if (linha >= 0) {
-                FRMDevolucaoProduto d = new FRMDevolucaoProduto();
-                int v = venda.get(linha).getCodigo();
-                d.setVenda(v);
-                System.out.println("lista " + venda.get(linha).getCodigo());
-
-                d.setVisible(true);
-                dispose();
-            }
-
-        } else {
-            int linha = tabelaVendas.getSelectedRow();
-            if (linha >= 0) {
-                AlertVenda v = new AlertVenda();
+                AlertReceberVenda v = new AlertReceberVenda();
                 v.setVenda(venda.get(linha).getCodigo());
+                v.setValor((venda.get(linha).getValor() - venda.get(linha).getDevolucao()));
                 v.setVisible(true);
             }
 
-        }
+        
     }//GEN-LAST:event_tabelaVendasMouseClicked
 
     private void btnPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisaActionPerformed
@@ -318,6 +314,10 @@ public class FRMListaVendas extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfDataFinActionPerformed
 
+    private void comboStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboStatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboStatusActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -335,20 +335,21 @@ public class FRMListaVendas extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FRMListaVendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FRMRecebimentoVendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FRMListaVendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FRMRecebimentoVendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FRMListaVendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FRMRecebimentoVendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FRMListaVendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FRMRecebimentoVendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FRMListaVendas().setVisible(true);
+                new FRMRecebimentoVendas().setVisible(true);
             }
         });
     }
