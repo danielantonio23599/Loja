@@ -1,7 +1,10 @@
 package sync;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import controle.ServidorControl;
 import modelo.local.ServidorBEAN;
+import okhttp3.HttpUrl;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -11,20 +14,21 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SyncDefault {
 
     private static String ip = "localhost";
-    private String url;
+    private static String url ="http://ctrltechinfo.ddns.net/";
+    private static String url2 ="http://192.168.1.100:8089/LojaServer/";
+  private static String url3 =   "http://ctrltechinfo2.sytes.net/";
+    
+   /* private static HttpUrl baseUrl = new HttpUrl.Builder()
+                    .scheme("http")
+                    .host("localhost:8089/LojaServer")
+                    .build();*/
+ private static  Gson gson = new GsonBuilder()
+        .setLenient()
+        .create();
     public static final Retrofit RETROFIT_LOJA = new Retrofit.Builder().
-            baseUrl(getUrl()).
+            baseUrl(url2).
             addConverterFactory(GsonConverterFactory.create()).
             build();
-    public static String getUrl() {
-        ServidorBEAN ser = ServidorControl.listar();
-       ip = ser.getIp();
-        if (!ip.equals("")) {
-            System.out.println(ip);
-            return "http://" + ip + ":8089/LojaServer/";
-        } else {
-            System.out.println("localhost");
-            return "http://localhost:8089/LojaServer/";
-        }
-    }
+   
 }
+

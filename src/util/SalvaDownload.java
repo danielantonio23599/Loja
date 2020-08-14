@@ -28,7 +28,7 @@ public class SalvaDownload {
             // todo change the file location/name according to your needs
             System.out.println(nome);
             File arquivo = null;
-            arquivo = new File("relatorios/" + nome);
+            arquivo = new File("c:/relatorios/" + nome);
             System.out.println(arquivo.getAbsolutePath());
             InputStream inputStream = null;
             OutputStream outputStream = null;

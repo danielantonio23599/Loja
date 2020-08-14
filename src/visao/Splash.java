@@ -35,7 +35,6 @@ public final class Splash extends javax.swing.JFrame {
      */
     public Splash() {
         initComponents();
-
         setLocationRelativeTo(null);
         onBackgroud();
 
@@ -105,9 +104,14 @@ public final class Splash extends javax.swing.JFrame {
             @Override
             public void onFailure(Call<SharedPreferencesEmpresaBEAN> call, Throwable t) {
                 //Servidor fora do ar
+                        SwingUtilities.invokeLater(new Runnable() {
+                            public void run() {
+                               JOptionPane.showMessageDialog(null, " erro");
 
-                JOptionPane.showMessageDialog(null, "Login Incorreto erro");
-                System.out.println("Login incorreto");
+                            }
+                        });
+
+                System.out.println(t.getMessage());
 
             }
         });
@@ -157,7 +161,7 @@ public final class Splash extends javax.swing.JFrame {
 
             @Override
             public void onFailure(Call<CaixaBEAN> call, Throwable t) {
-                JOptionPane.showMessageDialog(null, "Verifique o ip do servidor ");
+                System.out.println(t.getMessage());
                 FRMLogin l = new FRMLogin();
                 l.setVisible(true);
                 finalizar();

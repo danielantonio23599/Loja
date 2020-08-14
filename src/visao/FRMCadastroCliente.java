@@ -5,6 +5,7 @@
  */
 package visao;
 
+import modelo.local.Endereco;
 import com.google.gson.Gson;
 import controle.SharedPEmpresa_Control;
 import java.text.DateFormat;
@@ -38,6 +39,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import sync.SyncDefault;
+import sync.CepAPI;
+import sync.SyncCEP;
 import util.Criptografia;
 import util.EnviaEmail;
 import util.Time;
@@ -176,6 +179,7 @@ public class FRMCadastroCliente extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         jtfBairro = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jpSenhaR = new javax.swing.JPasswordField();
         jLabel24 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -265,6 +269,13 @@ public class FRMCadastroCliente extends javax.swing.JFrame {
         jLabel23.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel23.setText("Complemento:");
 
+        jButton1.setText("Pesquisar CEP");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -272,9 +283,6 @@ public class FRMCadastroCliente extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jtfCEP)
-                        .addContainerGap())
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11)
@@ -290,11 +298,6 @@ public class FRMCadastroCliente extends javax.swing.JFrame {
                                     .addComponent(jtfNumero))))
                         .addContainerGap())
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jtfCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jtfUF)
-                        .addContainerGap())
-                    .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jtfBairro)
                         .addGap(18, 18, 18)
                         .addComponent(jtfComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -308,7 +311,16 @@ public class FRMCadastroCliente extends javax.swing.JFrame {
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel10)
-                        .addGap(170, 170, 170))))
+                        .addGap(170, 170, 170))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jtfCEP, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtfCidade, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtfUF)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -340,7 +352,11 @@ public class FRMCadastroCliente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtfCEP, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jtfCEP, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(2, 2, 2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -546,6 +562,29 @@ public class FRMCadastroCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfCPFActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        CepAPI api = SyncCEP.RETROFIT_CEP().create(CepAPI.class);
+
+        final Call<Endereco> call = api.getEnderecoByCEP(jtfCEP.getText() + "");
+
+        call.enqueue(new Callback<Endereco>() {
+            @Override
+            public void onResponse(Call<Endereco> call, Response<Endereco> response) {
+                if (response.code() == 200) {
+                    Endereco u = response.body();
+                    if (u != null) {
+                   setEndereco(u);
+                    }
+                   
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Endereco> call, Throwable t) {
+            }
+        });
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -590,91 +629,12 @@ public class FRMCadastroCliente extends javax.swing.JFrame {
         });
     }
 
-    /*   private Email pegaDadosEmailEX(String desti) {
-        Email e = new Email();
-        e.setAssunto("Cadastro De Adimissão");
-        e.setCaminhoAnexo("");
-        e.setDestinatario(desti);
-        e.setMensagem("Seja Bem vindo a nossa empresa, desejamos muitas felicidades para o desenpenho das suas funções!!"
-                + "segue os seus dados de login 'SENHA' = " + jpSenha.getText());
-        e.setRemetente("danielantonio23599@gmail.com");
-        e.setSenha("galodoido13");
-        e.setNomeRemetente("Daniel");
-        return e;
-    }
-
-    private DefaultTableModel criaTabela() {
-        //sempre que usar JTable é necessário ter um DefaulttableModel
-        DefaultTableModel dTable = new DefaultTableModel() {
-            //Define o tipo dos campos (coluna) na mesma ordem que as colunas foram criadas
-            Class[] types = new Class[]{
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class,
-                java.lang.String.class, java.lang.String.class, java.lang.String.class,
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            //define se os campos podem ser editados na propria tabela
-            boolean[] canEdit = new boolean[]{
-                false, false, false, false, false, false, false, false, false
-            };
-
-            @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
-            }
-        };
-        //retorna o DefaultTableModel
-        return dTable;
-    }
-
-    private void preencheTabela(ArrayList<FuncionarioBEAN> dados) {
-        dTable = criaTabela();
-        //seta o nome das colunas da tabela
-        dTable.addColumn("Código");
-        dTable.addColumn("Nome");
-        dTable.addColumn("Cargo");
-        dTable.addColumn("CPF");
-        dTable.addColumn("Data Adimição");
-        dTable.addColumn("Data Nascimento");
-        dTable.addColumn("Telefone");
-        dTable.addColumn("Endereço");
-        dTable.addColumn("Email");
-
-        //pega os dados do ArrayList
-        //cada célula do arrayList vira uma linha(row) na tabela
-        DateFormat formatBR = new SimpleDateFormat("dd-mm-yyyy");
-        DateFormat formatUS = new SimpleDateFormat("yyyy-mm-dd");
-        Date date = null;
-        Date date2 = null;
-        for (FuncionarioBEAN dado : dados) {
-
-            try {
-                date = formatUS.parse(dado.getDataAdmicao());
-            } catch (ParseException ex) {
-                Logger.getLogger(FRMFuncionario.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            try {
-                date2 = formatUS.parse(dado.getDataNacimento());
-            } catch (ParseException ex) {
-                Logger.getLogger(FRMFuncionario.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-//Depois formata data
-            dTable.addRow(new Object[]{dado.getCodigo(), dado.getNome(),
-                dado.getCargo(), dado.getCPF(),
-                formatBR.format(date), formatBR.format(date2), dado.getTelefone(),
-                dado.getEndereco(), dado.getEmail()});
-        }
-        //set o modelo da tabela
-        tabelaFuncionarios.setModel(dTable);
-        tr = new TableRowSorter<TableModel>(dTable);
-        tabelaFuncionarios.setRowSorter(tr);
-
-    }*/
+  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Botoes;
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnLocalizar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -718,9 +678,6 @@ public class FRMCadastroCliente extends javax.swing.JFrame {
             retorno = "Campo Nome";
         }
 
-        if (jtfCPF.getText().equals("")) {
-            retorno += ", CPF";
-        }
         if (jtfEmail.getText().equals("")) {
             retorno += ", Email";
         }
@@ -759,12 +716,10 @@ public class FRMCadastroCliente extends javax.swing.JFrame {
 
     private ClienteBEAN getDadosCliente() {
         ClienteBEAN f = new ClienteBEAN();
-
         System.out.println(Time.formataDataUS(jtfNasc.getText()));
         f.setCpf(jtfCPF.getText() + "");
         f.setNascimento(Time.formataDataUS(jtfNasc.getText()));
         f.setEmail(jtfEmail.getText() + "");
-
         f.setNome(jtfNome.getText() + "");
         f.setProfissao(jtfProfissao.getText() + "");
         f.setSenha(Criptografia.criptografar(jpSenha.getText() + ""));
@@ -804,28 +759,7 @@ public class FRMCadastroCliente extends javax.swing.JFrame {
 
     }
 
-    /*private void preencheCampos(FuncionarioBEAN f) throws ParseException {
-        //selvet de listar um funcionario
-        DateFormat formatUS = new SimpleDateFormat("yyyy-mm-dd");
-        Date date2 = formatUS.parse(f.getDataNacimento());
-//Depois formata data
-        DateFormat formatBR = new SimpleDateFormat("dd-mm-yyyy");
-        String dateFormated2 = formatBR.format(date2);
-        jtfAdm.setText(dateFormated);
-        jtfNasc.setText(dateFormated2);
-        jtfCPF.setText(f.getCPF());
-        jtfEmail.setText(f.getEmail());
-        jtaEndereco.setText(f.getEndereco());
-        jtfNome.setText(f.getNome());
-        jtfRG.setText(f.getRG());
-        jtfSalario.setText(f.getSalario() + "");
-        jpSenha.setText(f.getSenha());
-        jtfTelefone.setText(f.getTelefone());
-        jtfUniforme.setText(f.getUniforme() + "");
-        jtfNumCatao.setText(f.getCartao() + "");
-        painelFuncionario.setSelectedIndex(1);
 
-    }*/
     private void cadastrar(ClienteBEAN f,EnderecoBEAN e) {
         Carregamento a = new Carregamento(this, true);
         SwingUtilities.invokeLater(new Runnable() {
@@ -874,69 +808,13 @@ public class FRMCadastroCliente extends javax.swing.JFrame {
 
     }
 
-    /*  public void localizar(int codigo) {
-        Carregamento a = new Carregamento(this, true);
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
+ private void setEndereco(Endereco e) {
+        jtfLogradouro.setText(e.getLogradouro());
+        jtfNumero.setText(e.getNumero());
+        jtfBairro.setText(e.getBairro());
+        jtfCidade.setText(e.getLocalidade());
+        jtfCEP.setText(e.getCep());
+        jtfUF.setText(e.getUf());
 
-                a.setVisible(true);
-
-            }
-        });
-        SharedPreferencesBEAN sh = SharedP_Control.listar();
-        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
-        final Call<FuncionarioBEAN> call = api.listarFuncionario(sh.getFunEmail(), sh.getFunSenha(), codigo + "");
-        call.enqueue(new Callback<FuncionarioBEAN>() {
-            @Override
-            public void onResponse(Call<FuncionarioBEAN> call, Response<FuncionarioBEAN> response) {
-                System.out.println(response.isSuccessful());
-                if (response.isSuccessful()) {
-                    String auth = response.headers().get("auth");
-                    if (auth.equals("1")) {
-                        System.out.println("Login correto");
-                        FuncionarioBEAN u = response.body();
-                        SwingUtilities.invokeLater(new Runnable() {
-                            public void run() {
-                                a.setVisible(false);
-                                try {
-                                    // dados = u;
-                                    preencheCampos(u);
-                                    System.out.println("passou");
-                                } catch (ParseException ex) {
-                                    Logger.getLogger(FRMFuncionario.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-                            }
-                        });
-
-                    } else {
-                        SwingUtilities.invokeLater(new Runnable() {
-                            public void run() {
-                                a.setVisible(false);
-                            }
-                        });
-                        System.out.println("Login incorreto");
-                        // senha ou usuario incorreto
-
-                    }
-                } else {
-                    SwingUtilities.invokeLater(new Runnable() {
-                        public void run() {
-                            a.setVisible(false);
-                        }
-                    });
-                    System.out.println("Login incorreto- fora do ar");
-                    //servidor fora do ar
-                }
-            }
-
-            @Override
-            public void onFailure(Call<FuncionarioBEAN> call, Throwable thrwbl) {
-                SwingUtilities.invokeLater(new Runnable() {
-                    public void run() {
-                        a.setVisible(false);
-                    }
-                });
-            }
-        });
-    }*/
+    }
 }

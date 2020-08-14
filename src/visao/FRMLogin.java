@@ -557,8 +557,9 @@ public class FRMLogin extends javax.swing.JFrame {
                 //Servidor fora do ar
                 a.setVisible(false);
                 JOptionPane.showMessageDialog(null, "Login Incorreto erro");
-                System.out.println("Login incorreto");
-
+                System.out.println(t.getMessage());
+               // System.out.println(t.getCause().getMessage());
+                System.out.println(t.toString());
             }
         });
 
@@ -582,4 +583,5 @@ public class FRMLogin extends javax.swing.JFrame {
             jpfSenha.setText(ll.getFunSenha());
         }
     }
+    
 }

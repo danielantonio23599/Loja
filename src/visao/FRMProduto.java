@@ -54,6 +54,7 @@ public class FRMProduto extends javax.swing.JFrame {
     BufferedImage imagem;
     BufferedImage imagem2;
     boolean selecionou = false;
+    boolean editarFoto = true;
 
     /**
      * Creates new form FRMPedido
@@ -813,6 +814,7 @@ public class FRMProduto extends javax.swing.JFrame {
 
                 lbFotoPedido.setIcon(new ImageIcon(imagem));
                 lbFotoPedido.setText("");
+                editarFoto = true;
 
             } catch (Exception ex) {
                 // System.out.println(ex.printStackTrace().toString());
@@ -1073,11 +1075,17 @@ public class FRMProduto extends javax.swing.JFrame {
             p.setGarantia(Integer.parseInt(jtfGarantia.getText() + ""));
         }
         p.setTipo(comboTipo.getSelectedItem() + "");
+
         if (lbFotoPedido.getIcon() != null) {
-            p.setFoto(ManipularImagem.getImgBytes(imagem2));
+            if (imagem2 != null) {
+                p.setFoto(ManipularImagem.getImgBytes(imagem2));
+            } else  {
+                p.setFoto(ManipularImagem.imageToByte(lbFotoPedido.getIcon()));
+            }
         } else {
             p.setFoto(null);
         }
+
         return p;
     }
 
@@ -1190,9 +1198,13 @@ public class FRMProduto extends javax.swing.JFrame {
         jtfGarantia.setText(c.getGarantia() + "");
         jtfDescricao.setText(c.getDescricao());
         comboTipo.setSelectedItem(c.getTipo());
-        ManipularImagem m = new ManipularImagem();
-        m.exibiImagemLabel(c.getFoto(), lbFotoPedido);
-
+        if (c.getFoto() != null) {
+            ManipularImagem m = new ManipularImagem();
+            m.exibiImagemLabel(c.getFoto(), lbFotoPedido);
+            editarFoto = false;
+        } else {
+            editarFoto = true;
+        }
     }
 
     private void listarAll() {
