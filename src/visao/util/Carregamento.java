@@ -6,6 +6,7 @@
 package visao.util;
 
 import java.awt.Color;
+import java.awt.Frame;
 
 /**
  *
@@ -16,8 +17,8 @@ public class Carregamento extends javax.swing.JDialog {
     /**
      * Creates new form Carregamento
      */
-    public Carregamento(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public Carregamento(Frame tela, boolean condicao) {
+        super(tela, condicao);
         initComponents();
         setLocationRelativeTo(null);
         this.getRootPane().setOpaque(false);

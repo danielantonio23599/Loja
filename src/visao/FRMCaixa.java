@@ -268,7 +268,7 @@ public class FRMCaixa extends javax.swing.JFrame {
         jtfFrete = new javax.swing.JTextField();
         jPanel19 = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
-        tabelaProdutosF = new javax.swing.JTable();
+        tabelaProdutosFe = new javax.swing.JTable();
         Close = new javax.swing.JPanel();
         jPanel118 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -897,8 +897,8 @@ public class FRMCaixa extends javax.swing.JFrame {
 
         jPanel19.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Produtos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
-        tabelaProdutosF.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        tabelaProdutosF.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaProdutosFe.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        tabelaProdutosFe.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -909,7 +909,7 @@ public class FRMCaixa extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane8.setViewportView(tabelaProdutosF);
+        jScrollPane8.setViewportView(tabelaProdutosFe);
 
         javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
         jPanel19.setLayout(jPanel19Layout);
@@ -1111,7 +1111,6 @@ public class FRMCaixa extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel5.setText("Líquido:");
 
-        jtfFaturamentoLiquido.setEditable(false);
         jtfFaturamentoLiquido.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jtfFaturamentoLiquido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -3746,7 +3745,7 @@ public class FRMCaixa extends javax.swing.JFrame {
     private javax.swing.JTable tabelaProCancelados;
     private javax.swing.JTable tabelaProduClose;
     private javax.swing.JTable tabelaProdutosBalcao;
-    private javax.swing.JTable tabelaProdutosF;
+    private javax.swing.JTable tabelaProdutosFe;
     private javax.swing.JTable tabelaSangria;
     private javax.swing.JTable tabelaVendaFinalizada;
     private javax.swing.ButtonGroup valorgrupo;
@@ -3855,9 +3854,9 @@ public class FRMCaixa extends javax.swing.JFrame {
                 dado.getQuantidade(), dado.getValorUNI(), dado.getTime()});
         }
         //set o modelo da tabela
-        tabelaProdutosF.setModel(dTable);
+        tabelaProdutosFe.setModel(dTable);
         tr = new TableRowSorter<TableModel>(dTable);
-        tabelaProdutosF.setRowSorter(tr);
+        tabelaProdutosFe.setRowSorter(tr);
 
     }
 
@@ -4404,7 +4403,7 @@ public class FRMCaixa extends javax.swing.JFrame {
         //cada célula do arrayList vira uma linha(row) na tabela
         for (ProdutosGravados dado : dados) {
             dTable.addRow(new Object[]{dado.getCodProduto(), dado.getNome(),
-                dado.getQuantidade(), dado.getValorUNI()});
+                dado.getQuantidade(), dado.getValorFinal()});
         }
         //set o modelo da tabela
         tabelaProduClose.setModel(dTable);
@@ -5162,7 +5161,6 @@ public class FRMCaixa extends javax.swing.JFrame {
                 });
             }
         });
-
     }
 
     private Float somarTotalFinal() {

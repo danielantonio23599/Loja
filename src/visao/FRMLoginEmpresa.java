@@ -337,6 +337,7 @@ public class FRMLoginEmpresa extends javax.swing.JFrame {
             }
         });
         LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
+        System.out.println("login :"+nomeUsuario+Criptografia.criptografar(senha));
         final Call<SharedPreferencesEmpresaBEAN> call = api.fazLoginEmpresa(nomeUsuario, Criptografia.criptografar(senha));
         SharedPreferencesEmpresaBEAN u = null;
         call.enqueue(new Callback<SharedPreferencesEmpresaBEAN>() {

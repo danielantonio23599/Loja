@@ -15,7 +15,7 @@ public class SyncDefault {
 
     private static String ip = "localhost";
     private static String url ="http://ctrltechinfo.ddns.net/";
-    private static String url2 ="http://192.168.1.100:8089/LojaServer/";
+    private static String url2 ="http://192.168.1.100:8080/LojaServer/";
   private static String url3 =   "http://ctrltechinfo2.sytes.net/";
     
    /* private static HttpUrl baseUrl = new HttpUrl.Builder()
