@@ -6,17 +6,23 @@
 package visao;
 
 import controle.SharedPEmpresa_Control;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import modelo.local.SharedPreferencesEmpresaBEAN;
 import net.sf.jasperreports.engine.JasperPrint;
 import okhttp3.ResponseBody;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.printing.PDFPageable;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -373,15 +379,32 @@ public class FRMPrincipal extends javax.swing.JFrame {
                     if (auth.equals("1")) {
                         String nome = response.headers().get("nome");
                         if (!nome.equals("0")) {
-                            boolean writtenToDisk = SalvaDownload.writeResponseBodyToDisk(response.body(), nome);
-                            System.out.println("Login correto");
+                            File arquivo = SalvaDownload.writeResponseBodyToDisk(response.body(), nome);
+                            PDDocument documento = null;
                             SwingUtilities.invokeLater(new Runnable() {
                                 public void run() {
                                     a.setVisible(false);
-
                                 }
                             });
-                            System.out.println("file download was a success? " + writtenToDisk);
+                            try {
+                                documento = PDDocument.load(arquivo);
+                                PrintService servico = PrintServiceLookup.lookupDefaultPrintService();
+                                PrinterJob job = PrinterJob.getPrinterJob();
+                                job.setPageable(new PDFPageable(documento));
+                                try {
+                                    job.setPrintService(servico);
+                                } catch (PrinterException ex) {
+
+                                }
+
+                                job.print();
+                                documento.close();
+                            } catch (IOException ex) {
+
+                            } catch (PrinterException ex) {
+
+                            }
+                            System.out.println("file download was a success? " + arquivo);
                         } else {
                             SwingUtilities.invokeLater(new Runnable() {
                                 public void run() {
@@ -450,15 +473,32 @@ public class FRMPrincipal extends javax.swing.JFrame {
                     if (auth.equals("1")) {
                         String nome = response.headers().get("nome");
                         if (!nome.equals("0")) {
-                            boolean writtenToDisk = SalvaDownload.writeResponseBodyToDisk(response.body(), nome);
-                            System.out.println("Login correto");
+                            File arquivo = SalvaDownload.writeResponseBodyToDisk(response.body(), nome);
+                            PDDocument documento = null;
                             SwingUtilities.invokeLater(new Runnable() {
                                 public void run() {
                                     a.setVisible(false);
-
                                 }
                             });
-                            System.out.println("file download was a success? " + writtenToDisk);
+                            try {
+                                documento = PDDocument.load(arquivo);
+                                PrintService servico = PrintServiceLookup.lookupDefaultPrintService();
+                                PrinterJob job = PrinterJob.getPrinterJob();
+                                job.setPageable(new PDFPageable(documento));
+                                try {
+                                    job.setPrintService(servico);
+                                } catch (PrinterException ex) {
+
+                                }
+
+                                job.print();
+                                documento.close();
+                            } catch (IOException ex) {
+
+                            } catch (PrinterException ex) {
+
+                            }
+                            System.out.println("file download was a success? " + arquivo);
                         } else {
                             SwingUtilities.invokeLater(new Runnable() {
                                 public void run() {
@@ -521,8 +561,8 @@ public class FRMPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem17ActionPerformed
 
     private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
-       FRMRelatorioLucrosVendas r = new FRMRelatorioLucrosVendas();
-       r.setVisible(true);
+        FRMRelatorioLucrosVendas r = new FRMRelatorioLucrosVendas();
+        r.setVisible(true);
     }//GEN-LAST:event_jMenuItem18ActionPerformed
 
     /**

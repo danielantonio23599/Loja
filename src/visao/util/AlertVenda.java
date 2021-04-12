@@ -8,9 +8,15 @@ package visao.util;
 import com.google.gson.Gson;
 import controle.SharedPEmpresa_Control;
 import java.awt.event.KeyEvent;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -18,6 +24,8 @@ import modelo.CaixaBEAN;
 import modelo.VendaBEAN;
 import modelo.local.SharedPreferencesEmpresaBEAN;
 import okhttp3.ResponseBody;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.printing.PDFPageable;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,7 +38,7 @@ import visao.FRMCaixa;
  *
  * @author Daniel
  */
-public class AlertVenda extends javax.swing.JFrame  {
+public class AlertVenda extends javax.swing.JFrame {
 
     private int venda;
 
@@ -41,7 +49,6 @@ public class AlertVenda extends javax.swing.JFrame  {
     public void setVenda(int venda) {
         this.venda = venda;
     }
-    
 
     /**
      * Creates new form AlertImput
@@ -175,7 +182,7 @@ public class AlertVenda extends javax.swing.JFrame  {
                 }
             });
 
-            final Call<ResponseBody> call = api.geraNotaVenda(venda+"", sh.getEmpEmail(), sh.getEmpSenha());
+            final Call<ResponseBody> call = api.geraNotaVenda(venda + "", sh.getEmpEmail(), sh.getEmpSenha());
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -186,15 +193,32 @@ public class AlertVenda extends javax.swing.JFrame  {
                         if (auth.equals("1")) {
                             String nome = response.headers().get("nome");
                             if (!nome.equals("0")) {
-                                boolean writtenToDisk = SalvaDownload.writeResponseBodyToDisk(response.body(), nome);
-                                System.out.println("Login correto");
+                                File arquivo = SalvaDownload.writeResponseBodyToDisk(response.body(), nome);
+                                PDDocument documento = null;
                                 SwingUtilities.invokeLater(new Runnable() {
                                     public void run() {
                                         a.setVisible(false);
-
                                     }
                                 });
-                                System.out.println("file download was a success? " + writtenToDisk);
+                                try {
+                                    documento = PDDocument.load(arquivo);
+                                    PrintService servico = PrintServiceLookup.lookupDefaultPrintService();
+                                    PrinterJob job = PrinterJob.getPrinterJob();
+                                    job.setPageable(new PDFPageable(documento));
+                                    try {
+                                        job.setPrintService(servico);
+                                    } catch (PrinterException ex) {
+
+                                    }
+
+                                    job.print();
+                                    documento.close();
+                                } catch (IOException ex) {
+
+                                } catch (PrinterException ex) {
+
+                                }
+                                System.out.println("file download was a success? " + arquivo);
                             } else {
                                 SwingUtilities.invokeLater(new Runnable() {
                                     public void run() {
@@ -243,7 +267,7 @@ public class AlertVenda extends javax.swing.JFrame  {
     }//GEN-LAST:event_buttonNotaActionPerformed
 
     private void buttonCupomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCupomActionPerformed
-      String message = "Deseja realmente imprimir a venda?";
+        String message = "Deseja realmente imprimir a venda?";
         String title = "Confirmação";
         int reply = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
@@ -257,7 +281,7 @@ public class AlertVenda extends javax.swing.JFrame  {
                 }
             });
 
-            final Call<ResponseBody> call = api.geraCupomVenda(venda+"", sh.getEmpEmail(), sh.getEmpSenha());
+            final Call<ResponseBody> call = api.geraCupomVenda(venda + "", sh.getEmpEmail(), sh.getEmpSenha());
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -268,15 +292,32 @@ public class AlertVenda extends javax.swing.JFrame  {
                         if (auth.equals("1")) {
                             String nome = response.headers().get("nome");
                             if (!nome.equals("0")) {
-                                boolean writtenToDisk = SalvaDownload.writeResponseBodyToDisk(response.body(), nome);
-                                System.out.println("Login correto");
+                                File arquivo = SalvaDownload.writeResponseBodyToDisk(response.body(), nome);
+                                PDDocument documento = null;
                                 SwingUtilities.invokeLater(new Runnable() {
                                     public void run() {
                                         a.setVisible(false);
-
                                     }
                                 });
-                                System.out.println("file download was a success? " + writtenToDisk);
+                                try {
+                                    documento = PDDocument.load(arquivo);
+                                    PrintService servico = PrintServiceLookup.lookupDefaultPrintService();
+                                    PrinterJob job = PrinterJob.getPrinterJob();
+                                    job.setPageable(new PDFPageable(documento));
+                                    try {
+                                        job.setPrintService(servico);
+                                    } catch (PrinterException ex) {
+
+                                    }
+
+                                    job.print();
+                                    documento.close();
+                                } catch (IOException ex) {
+
+                                } catch (PrinterException ex) {
+
+                                }
+                                System.out.println("file download was a success? " + arquivo);
                             } else {
                                 SwingUtilities.invokeLater(new Runnable() {
                                     public void run() {

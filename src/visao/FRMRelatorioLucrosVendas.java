@@ -60,6 +60,12 @@ public class FRMRelatorioLucrosVendas extends javax.swing.JFrame {
         return dTable;
     }
 
+    private void setData() {
+        String data = Time.getDataBR();
+        jtfDataIn.setText(data);
+        jtfDataFin.setText(data);
+    }
+
     private void preencheTabelaProdutos(ArrayList<Venda> dados) {
         float valorVendido = 0;
         float custo = 0;
@@ -75,7 +81,6 @@ public class FRMRelatorioLucrosVendas extends javax.swing.JFrame {
         dTable.addColumn("Valor Final");
         dTable.addColumn("Pagamento");
         dTable.addColumn("Frete");
-        
 
         //pega os dados do ArrayList
         //cada célula do arrayList vira uma linha(row) na tabela
@@ -89,9 +94,9 @@ public class FRMRelatorioLucrosVendas extends javax.swing.JFrame {
         tabelaVendas.setModel(dTable);
         tr = new TableRowSorter<TableModel>(dTable);
         tabelaVendas.setRowSorter(tr);
-        jtfTotalVendido.setText(valorVendido+"");
-        jtfTotalCusto.setText(custo+"");
-        jtfLucros.setText((valorVendido-custo)+"");
+        jtfTotalVendido.setText(valorVendido + "");
+        jtfTotalCusto.setText(custo + "");
+        jtfLucros.setText((valorVendido - custo) + "");
 
     }
 
@@ -102,6 +107,7 @@ public class FRMRelatorioLucrosVendas extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         listar();
+        setData();
     }
 
     /**
@@ -367,19 +373,23 @@ public class FRMRelatorioLucrosVendas extends javax.swing.JFrame {
     }//GEN-LAST:event_tabelaVendasMouseClicked
 
     private void btnPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisaActionPerformed
-        listarPorConsulta();
+        //listarPorCombinacao();
+        btnStatusActionPerformed(evt);
     }//GEN-LAST:event_btnPesquisaActionPerformed
 
     private void btnStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatusActionPerformed
         if (comboStatus.getSelectedIndex() > 0) {
-            listarPorStatus();
+            if (!jtfDataFin.getText().equals("") && !jtfDataIn.getText().equals("")) {
+                listarPorCombinacao();
+            }
         }
     }//GEN-LAST:event_btnStatusActionPerformed
 
     private void btnDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataActionPerformed
-        if (!jtfDataFin.getText().equals("") && !jtfDataIn.getText().equals("")) {
-            listarPorData();
-        }
+        /* if (!jtfDataFin.getText().equals("") && !jtfDataIn.getText().equals("")) {
+            listarPorCombinacao();
+        }*/
+        btnStatusActionPerformed(evt);
     }//GEN-LAST:event_btnDataActionPerformed
 
     private void jtfDataFinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfDataFinActionPerformed
@@ -496,6 +506,65 @@ public class FRMRelatorioLucrosVendas extends javax.swing.JFrame {
             @Override
             public void onResponse(Call<ArrayList<Venda>> call, Response<ArrayList<Venda>> response) {
                 System.out.println(response.isSuccessful());
+                if (response.isSuccessful()) {
+                    String auth = response.headers().get("auth");
+                    if (auth.equals("1")) {
+                        System.out.println("Login correto");
+                        venda = response.body();
+                        SwingUtilities.invokeLater(new Runnable() {
+                            public void run() {
+                                a.setVisible(false);
+                                preencheTabelaProdutos(venda);
+                            }
+                        });
+
+                    } else {
+                        SwingUtilities.invokeLater(new Runnable() {
+                            public void run() {
+                                a.setVisible(false);
+                            }
+                        });
+                        System.out.println("Login incorreto");
+                        // senha ou usuario incorreto
+
+                    }
+                } else {
+                    SwingUtilities.invokeLater(new Runnable() {
+                        public void run() {
+                            a.setVisible(false);
+                        }
+                    });
+                    System.out.println("Login incorreto- fora do ar");
+                    //servidor fora do ar
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Venda>> call, Throwable t) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        a.setVisible(false);
+                    }
+                });
+            }
+        });
+    }
+
+    public void listarPorCombinacao() {
+        Carregamento a = new Carregamento(this, true);
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                a.setVisible(true);
+
+            }
+        });
+        SharedPreferencesEmpresaBEAN sh = SharedPEmpresa_Control.listar();
+        LojaAPI api = SyncDefault.RETROFIT_LOJA.create(LojaAPI.class);
+        final Call<ArrayList<Venda>> call = api.getVendasPorCombinacao(sh.getEmpEmail(), sh.getEmpSenha(), Time.formataDataUS(jtfDataIn.getText()), Time.formataDataUS(jtfDataFin.getText()), comboStatus.getSelectedItem().toString(), jtfPesquisa.getText());
+        call.enqueue(new Callback<ArrayList<Venda>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Venda>> call, Response<ArrayList<Venda>> response) {
+                System.out.println(response.message());
                 if (response.isSuccessful()) {
                     String auth = response.headers().get("auth");
                     if (auth.equals("1")) {

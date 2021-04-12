@@ -28,6 +28,11 @@ public class Time {
         Date date = new Date();
         return dateFormat.format(date);
     }
+    public static String getDataBR() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
 
     public static String formataDataBR(String data) {
         String dataF = "";

@@ -234,6 +234,10 @@ public interface LojaAPI {
     Call<ArrayList<Venda>> getVendasPorData(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha, @Field("dataIn") String dataIn, @Field("dataFin") String dataFin);
 
     @FormUrlEncoded
+    @POST("loja_server/ListarVendasCombinacao")
+    Call<ArrayList<Venda>> getVendasPorCombinacao(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha, @Field("dataIn") String dataIn, @Field("dataFin") String dataFin,@Field("status") String status,@Field("consulta") String consulta);
+
+    @FormUrlEncoded
     @POST("loja_server/IsMesasAbertas")
     Call<Void> isMesasAbertas(@Field("nomeUsuario") String nomeUsuario, @Field("senha") String senha);
 

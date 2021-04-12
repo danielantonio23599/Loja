@@ -15,9 +15,15 @@ import java.awt.CardLayout;
 import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -38,6 +44,8 @@ import modelo.VendaBEAN;
 import modelo.local.SharedPreferencesBEAN;
 import modelo.local.SharedPreferencesEmpresaBEAN;
 import okhttp3.ResponseBody;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.printing.PDFPageable;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -1428,15 +1436,32 @@ public class FRMVenda extends javax.swing.JFrame {
                         if (auth.equals("1")) {
                             String nome = response.headers().get("nome");
                             if (!nome.equals("0")) {
-                                boolean writtenToDisk = SalvaDownload.writeResponseBodyToDisk(response.body(), nome);
-                                System.out.println("Login correto");
+                                File arquivo = SalvaDownload.writeResponseBodyToDisk(response.body(), nome);
+                                PDDocument documento = null;
                                 SwingUtilities.invokeLater(new Runnable() {
                                     public void run() {
                                         a.setVisible(false);
-
                                     }
                                 });
-                                System.out.println("file download was a success? " + writtenToDisk);
+                                try {
+                                    documento = PDDocument.load(arquivo);
+                                    PrintService servico = PrintServiceLookup.lookupDefaultPrintService();
+                                    PrinterJob job = PrinterJob.getPrinterJob();
+                                    job.setPageable(new PDFPageable(documento));
+                                    try {
+                                        job.setPrintService(servico);
+                                    } catch (PrinterException ex) {
+
+                                    }
+
+                                    job.print();
+                                    documento.close();
+                                } catch (IOException ex) {
+
+                                } catch (PrinterException ex) {
+
+                                }
+                                System.out.println("file download was a success? " + arquivo);
                             } else {
                                 SwingUtilities.invokeLater(new Runnable() {
                                     public void run() {
